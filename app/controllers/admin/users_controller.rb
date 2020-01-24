@@ -1,4 +1,6 @@
 class Admin::UsersController < ApplicationController
+  before_action :require_admin
+
   def index
     @users = User.all
   end
@@ -46,5 +48,12 @@ class Admin::UsersController < ApplicationController
   def admin_user_params
     params.require(:user).permit(:name, :email, :admin, :test,
                                  :password, :password_confirmation)
+  end
+
+  def require_admin
+    return if current_user&.admin?
+
+    redirect_to root_url
+    flash[:danger] = '権限がありません'
   end
 end

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_login, only: :destroy
+
   def new
     @session = Session.new
   end
@@ -9,7 +11,7 @@ class SessionsController < ApplicationController
     if @session.valid?
       session[:user_id] = @session.user.id
       flash[:notice] = 'ログインしました'
-      redirect_to root_url
+      redirect_back_or root_url
     else
       render :new
     end
@@ -24,5 +26,10 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:email, :password)
+  end
+
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding] || default)
+    session.delete(:forwarding_url)
   end
 end
