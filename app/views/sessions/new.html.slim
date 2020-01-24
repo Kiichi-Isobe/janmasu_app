@@ -1,0 +1,13 @@
+- content_for(:title) { 'ログイン' }
+
+.content-container
+  h1.form-title ログイン
+  = form_with model: @session, url: login_path, local: true, class: 'form' do |f|
+    = render partial: 'shared/error_message', locals: { object: @session }
+    .form-group
+      = f.text_field :email, autofocus: true
+      = f.label :email, 'メールアドレス'
+    .form-group
+      = f.password_field :password
+      = f.label :password, 'パスワード'
+    = f.submit 'ログインする', class: 'btn'
