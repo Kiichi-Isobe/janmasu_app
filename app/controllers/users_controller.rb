@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: %i[search show]
+  before_action :require_login, only: %i[search show friend]
 
   def show
     @user = User.find(params[:id])
@@ -31,7 +31,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def friend; end
+  def friend
+    @user = User.find(params[:id])
+  end
 
   private
 

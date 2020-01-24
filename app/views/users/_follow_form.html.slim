@@ -1,0 +1,8 @@
+- if current_user.following?(user)
+  = form_with url: relationship_path, method: :delete, local: true do |f|
+    = f.hidden_field :following_id, value: user.id
+    = f.submit '友達解除する', class: 'btn btn-danger'
+- elsif current_user != user
+  = form_with url: relationships_path, local: true do |f|
+    = f.hidden_field :following_id, value: user.id
+    = f.submit '友達になる', class: 'btn'

@@ -3,7 +3,7 @@ class RelationshipsController < ApplicationController
 
   def create
     user = User.find(params[:following_id])
-    if current_user.id == user.id || current_user.following?(user)
+    if current_user == user || current_user.following?(user)
       redirect_to root_url
     else
       current_user.follow!(user)
@@ -14,7 +14,7 @@ class RelationshipsController < ApplicationController
 
   def destroy
     user = User.find(params[:following_id])
-    if current_user.id == user.id || !current_user.following?(user)
+    if current_user == user || !current_user.following?(user)
       redirect_to root_url
     else
       current_user.unfollow!(user)

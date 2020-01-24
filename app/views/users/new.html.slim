@@ -1,7 +1,7 @@
 - content_for(:title) { 'ユーザー新規作成' }
 
 .content-container
-  h1.form-title 新規登録
+  h1.section-title 新規登録
   = form_with model: @user, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @user }
     .form-group

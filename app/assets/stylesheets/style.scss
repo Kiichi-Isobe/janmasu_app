@@ -279,6 +279,12 @@
   background-color: white;
 }
 
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
 // フッター
 
 footer {
@@ -289,11 +295,6 @@ footer {
 
 // フォーム
 
-.form-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 40px;
-}
 .form {
   width: 80%;
   max-width: 500px;
@@ -310,6 +311,7 @@ footer {
       order: 1;
       padding-right: 10px;
       text-align: right;
+      border-bottom: 1px solid transparent;
     }
     input {
       width: 100%;
@@ -333,11 +335,11 @@ footer {
     }
     .field_with_errors {
       input {
-        border: 2px solid indianred;
-        color: indianred;
+        border: 2px solid lightcoral;
+        color: lightcoral;
       }
       label {
-        color: indianred;
+        color: lightcoral;
       }
     }
   }
@@ -399,6 +401,15 @@ footer {
   &:focus {
     background-color: darkseagreen;
     color: white;
+  }
+}
+
+.btn-danger {
+  color: lightcoral;
+  border-color: lightcoral;
+  &:hover,
+  &:focus {
+    background-color: lightcoral;
   }
 }
 
@@ -466,7 +477,7 @@ footer {
 }
 
 .danger {
-  color: indianred;
+  color: lightcoral;
 }
 
 // ユーザー詳細画面
@@ -480,5 +491,43 @@ footer {
   }
   .user-statistics-container {
     width: 70%;
+  }
+}
+
+.user-friend-list {
+  width: 350px;
+  margin: 0 auto;
+  list-style: none;
+  li {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    .user-name {
+      display: block;
+      width: 150px;
+      margin-right: 20px;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-bottom: 1px solid transparent;
+      &:hover {
+        color: darkseagreen;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-friend-list {
+    width: 90%;
+    li {
+      display: block;
+      margin-top: 30px;
+      .user-name {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    }
   }
 }
