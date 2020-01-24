@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: :search
+  before_action :require_login, only: %i[search show]
 
   def show
     @user = User.find(params[:id])
@@ -30,6 +30,8 @@ class UsersController < ApplicationController
       redirect_to search_users_url
     end
   end
+
+  def friend; end
 
   private
 

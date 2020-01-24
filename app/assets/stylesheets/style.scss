@@ -271,17 +271,12 @@
 }
 
 .content-container {
-  width: 70%;
+  max-width: 1000px;
+  width: 90%;
   margin: 80px auto;
   padding: 50px 0;
   border-radius: 5px;
   background-color: white;
-}
-
-@media (max-width: 768px) {
-  .content-container {
-    width: 80%;
-  }
 }
 
 // フッター
@@ -455,7 +450,7 @@ footer {
   }
 }
 
-// Admin::Users
+// ユーザー管理画面
 
 .admin-user-table {
   margin: 0 auto 30px;
@@ -472,4 +467,18 @@ footer {
 
 .danger {
   color: indianred;
+}
+
+// ユーザー詳細画面
+
+.user-container {
+  display: flex;
+  width: 100%;
+  .user-profile-container {
+    width: 30%;
+    border-right: 1px solid dimgray;
+  }
+  .user-statistics-container {
+    width: 70%;
+  }
 }

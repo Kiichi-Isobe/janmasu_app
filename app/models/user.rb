@@ -26,18 +26,18 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   # ユーザーをフォローする
-  def follow(other_user)
-    following << other_user
+  def follow!(other_user)
+    following_relationships.create!(following_id: other_user.id)
   end
 
   # ユーザーをフォロー解除する
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
+  def unfollow!(other_user)
+    following_relationships.find_by(following_id: other_user.id).destroy
   end
 
   # 現在のユーザーがフォローしていたらtrueを返す
   def following?(other_user)
-    following.include?(other_user)
+    following_relationships.find_by(following_id: other_user.id)
   end
 
   private

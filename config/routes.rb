@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   controller :users do
     resources :users, only: %i[show new create] do
+      member do
+        get :friend
+      end
+
       collection do
         get :search
       end
@@ -17,5 +21,9 @@ Rails.application.routes.draw do
     get '/login', action: :new
     post '/login', action: :create
     get '/logout', action: :destroy
+  end
+
+  controller :relationships do
+    resources :relationships, only: %i[create destroy]
   end
 end

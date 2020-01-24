@@ -1,4 +1,17 @@
 - content_for(:title) { 'ユーザー詳細' }
 
 .content-container
-  h1= @user.name
+  .user-container
+    .user-profile-container
+      p.user-name= @user.name
+      .user-friend= link_to "友達#{@user.followings.count}人", friend_user_path
+      - if current_user.following?(@user)
+        = form_with url: relationship_path, method: :delete, local: true do |f|
+          = f.hidden_field :following_id, value: @user.id
+          = f.submit '友達解除する', class: 'btn'
+      - else
+        = form_with url: relationships_path, local: true do |f|
+          = f.hidden_field :following_id, value: @user.id
+          = f.submit '友達になる', class: 'btn'
+
+    .user-statistics-container
