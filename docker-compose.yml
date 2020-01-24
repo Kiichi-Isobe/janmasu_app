@@ -1,0 +1,30 @@
+version: "3"
+services:
+  db:
+    image: postgres:10.5
+    volumes:
+      - db_vol:/var/lib/postgresql/data
+  web:
+    build: .
+    command: sleep infinity
+    volumes:
+      - .:/app
+      - gem_vol:/usr/local/bundle
+    environment:
+      - "SELENIUM_DRIVER_URL=http://selenium_chrome:4444/wd/hub"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  selenium_chrome:
+    image: selenium/standalone-chrome-debug
+    logging:
+      driver: none
+  smtp:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+volumes:
+  db_vol:
+  gem_vol:
