@@ -1,0 +1,10 @@
+- content_for(:title) { 'ユーザー検索' }
+
+.content-container
+  h1.form-title ユーザー検索
+
+  = form_with url: search_users_path, method: :get, local: true, class: 'form' do |f| 
+    .form-group
+      = f.text_field :name, autofocus: true
+      = f.label :name, 'ユーザーID'
+    = f.submit '検索する', class: 'btn'

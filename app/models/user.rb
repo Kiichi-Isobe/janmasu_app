@@ -1,6 +1,18 @@
 class User < ApplicationRecord
   has_secure_password
 
+  before_save :downcase_email
+
+  has_many :following_relationships, foreign_key: 'follower_id',
+                                     class_name: 'Relationship',
+                                     dependent: :destroy
+  has_many :followings, through: :following_relationships
+
+  has_many :follower_relationships, foreign_key: 'following_id',
+                                    class_name: 'Relationship',
+                                    dependent: :destroy
+  has_many :followers, through: :follower_relationships
+
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-zA-Z]*\z/.freeze
   validates :name, format: { with: VALID_NAME_REGEX, message: 'は半角英数字で入力してください' }
@@ -12,4 +24,26 @@ class User < ApplicationRecord
                     allow_blank: true
 
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  # ユーザーをフォローする
+  def follow(other_user)
+    following << other_user
+  end
+
+  # ユーザーをフォロー解除する
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # 現在のユーザーがフォローしていたらtrueを返す
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
+  private
+
+  # メールアドレスをすべて小文字にする
+  def downcase_email
+    email.downcase!
+  end
 end

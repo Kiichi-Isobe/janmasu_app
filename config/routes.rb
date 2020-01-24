@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   end
 
   controller :users do
-    resources :users, only: %i[new create]
+    resources :users, only: %i[show new create] do
+      collection do
+        get :search
+      end
+    end
   end
 
   controller :sessions do
