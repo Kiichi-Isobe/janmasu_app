@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+html {
+  font-size: 62.5%;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: whitesmoke;
+  text-align: center;
+  color: dimgray;
+  font-family: "Noto Sans JP", "Yu Gothic Medium", "Hiragino Kaku Gothic ProN",
+    Meiryo, "sans-serif";
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.field_with_errors {
+  display: contents;
+}

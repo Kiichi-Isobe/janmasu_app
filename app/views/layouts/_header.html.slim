@@ -1,0 +1,14 @@
+input type='checkbox' id='nav-toggle'
+header
+  .mobile-navbar
+    = link_to root_path do
+      = image_tag 'Janmasu.png'
+    label.navicon for='nav-toggle'
+      span
+  nav.navbar
+    = link_to root_path do
+      = image_tag 'Janmasu.png'
+    ul
+      li= link_to 'ユーザー管理', '#'
+      li= link_to 'ログイン', '#'
+      li= link_to 'ログアウト', '#'

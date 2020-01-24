@@ -1,0 +1,5 @@
+- flash.each do |message_type, message|
+  input type='checkbox' id='flash-toggle'
+  .flash class="flash-#{message_type}" 
+    = message
+    label.flash-close-btn for='flash-toggle'
