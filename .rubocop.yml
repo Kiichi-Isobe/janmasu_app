@@ -1,0 +1,14 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+ClassAndModuleChildren:
+  Enabled: false
+
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - "db/schema.rb"
+    - "vendor/**/*"
