@@ -1,4 +1,4 @@
-// アラート
+// フラッシュ
 
 #flash-toggle {
   display: none;
@@ -290,4 +290,186 @@ footer {
   padding: 15px 0;
   font-size: 1.2rem;
   background-color: antiquewhite;
+}
+
+// フォーム
+
+.form-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+.form {
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+  font-size: 1.4rem;
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-right: 80px;
+    label {
+      width: 140px;
+      flex-shrink: 0;
+      order: 1;
+      padding-right: 10px;
+      text-align: right;
+    }
+    input {
+      width: 100%;
+      height: 35px;
+      order: 2;
+      background-color: transparent;
+      color: dimgray;
+      border: 1px solid dimgray;
+      border-radius: 5px;
+      outline: none;
+      &::placeholder {
+        color: darkgray;
+      }
+      &:focus {
+        border: 2px solid darkseagreen;
+        color: darkseagreen;
+        + label {
+          color: darkseagreen;
+        }
+      }
+    }
+    .field_with_errors {
+      input {
+        border: 2px solid indianred;
+        color: indianred;
+      }
+      label {
+        color: indianred;
+      }
+    }
+  }
+  .form-check {
+    display: block;
+    text-align: left;
+    margin-bottom: 30px;
+    label {
+      display: inline-block;
+      position: relative;
+      width: 140px;
+      padding-right: 10px;
+      text-align: right;
+      &::after {
+        content: "";
+        position: absolute;
+        top: -3px;
+        left: 140px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid dimgray;
+        border-radius: 5px;
+      }
+    }
+    input {
+      display: inline-block;
+      width: 0;
+      margin: 0;
+      &:checked + label::after {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23696969' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: -1px 0;
+      }
+      &:focus + label {
+        color: darkseagreen;
+        &::after {
+          border: 2px solid darkseagreen;
+        }
+      }
+      &:focus:checked + label::after {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238fbc8f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+        background-position: -1.5px -0.5px;
+      }
+    }
+  }
+}
+
+.btn {
+  padding: 5px 10px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  outline: none;
+  color: darkseagreen;
+  background-color: transparent;
+  border: 2px solid darkseagreen;
+  border-radius: 5px;
+  transition: 0.15s ease-in;
+  &:hover,
+  &:focus {
+    background-color: darkseagreen;
+    color: white;
+  }
+}
+
+@media (max-width: 768px) {
+  .form {
+    .form-group {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-right: 0;
+      label {
+        margin-bottom: 10px;
+        text-align: start;
+      }
+    }
+    .form-check label {
+      width: auto;
+      &::after {
+        left: 100%;
+      }
+    }
+  }
+}
+
+// アラート
+
+#alert-toggle {
+  display: none;
+}
+
+.alert {
+  position: relative;
+  padding: 15px;
+  background-color: lightcoral;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  text-align: left;
+  color: whitesmoke;
+  p {
+    margin-bottom: 10px;
+  }
+  ul {
+    list-style: none;
+    li {
+      margin-bottom: 5px;
+      &::before {
+        content: "- ";
+      }
+    }
+  }
+}
+
+// Admin::Users
+
+.admin-user-table {
+  margin: 0 auto 30px;
+  font-size: 1rem;
+  th,
+  td {
+    border: 1px solid lightgray;
+    padding: 5px;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+.danger {
+  color: indianred;
 }

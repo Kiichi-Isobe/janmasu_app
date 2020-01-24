@@ -1,0 +1,6 @@
+- object.errors.any?
+  .alert
+    p= "#{object.errors.count}件のエラーが発生しました"
+    ul
+      - object.errors.full_messages.each do |msg|
+        li= msg

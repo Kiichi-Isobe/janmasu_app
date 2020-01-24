@@ -1,0 +1,5 @@
+- content_for(:title) { 'ユーザー編集' }
+
+.content-container
+  h1.form-title ユーザー編集
+  = render partial: 'form', locals: {user: @user}

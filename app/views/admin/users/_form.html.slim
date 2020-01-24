@@ -1,0 +1,21 @@
+= form_with model: [:admin, user], local: true, class: 'form' do |f|
+  = render partial: 'shared/error_message', locals: { object: user }
+  .form-group
+    = f.text_field :name, autofocus: true
+    = f.label :name
+  .form-group
+    = f.text_field :email, autofocus: true
+    = f.label :email
+  .form-check
+    = f.check_box :admin
+    = f.label :admin
+  .form-check
+    = f.check_box :test
+    = f.label :test
+  .form-group
+    = f.password_field :password
+    = f.label :password
+  .form-group
+    = f.password_field :password_confirmation
+    = f.label :password_confirmation
+  = f.submit '登録する', class: 'btn'

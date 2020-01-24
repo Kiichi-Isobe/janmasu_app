@@ -1,0 +1,5 @@
+- content_for(:title) { 'ユーザー新規作成' }
+
+.content-container
+  h1.form-title ユーザー新規作成
+  = render partial: 'form', locals: {user: @user}
