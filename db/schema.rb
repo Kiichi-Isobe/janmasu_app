@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_005944) do
+ActiveRecord::Schema.define(version: 2020_01_25_080040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "leagues", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "rule_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rule_id"], name: "index_leagues_on_rule_id"
+    t.index ["user_id"], name: "index_leagues_on_user_id"
+  end
+
+  create_table "participations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "league_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_participations_on_league_id"
+    t.index ["user_id", "league_id"], name: "index_participations_on_user_id_and_league_id", unique: true
+    t.index ["user_id"], name: "index_participations_on_user_id"
+  end
 
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id", null: false
@@ -52,5 +71,7 @@ ActiveRecord::Schema.define(version: 2020_01_25_005944) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "leagues", "rules"
+  add_foreign_key "leagues", "users"
   add_foreign_key "rules", "users"
 end

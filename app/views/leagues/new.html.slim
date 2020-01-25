@@ -1,0 +1,15 @@
+- content_for(:title) { '新規対局作成' }
+
+.content-container
+  h1.section-title 新規対局作成
+  = form_with model: @league, local: true, class: 'form' do |f|
+    = render partial: 'shared/error_message', locals: { object: @league }
+    .form-group
+      = f.select :rule_id, options_for_select(@rules), autofocus: true
+      = f.label :rule_id
+    ul.user-friend-list
+      = f.collection_check_boxes :user_ids, @followings, :id, :name do |user|
+        li
+          .user-name= user.text
+          .user-follow= user.check_box
+    = f.submit '登録する', class: 'btn'

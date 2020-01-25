@@ -85,6 +85,7 @@
     content: "";
     width: 25px;
     height: 100%;
+    flex-shrink: 0;
     background-color: deepskyblue;
   }
   > a {

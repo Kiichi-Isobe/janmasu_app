@@ -1,5 +1,6 @@
 class RulesController < ApplicationController
   before_action :require_login
+  before_action :require_correct_user, only: %i[edit update destroy]
 
   def index
     @rules = current_user.rules
@@ -24,12 +25,9 @@ class RulesController < ApplicationController
     end
   end
 
-  def edit
-    @rule = current_user.rules.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @rule = current_user.rules.find(params[:id])
     if @rule.update(rule_params)
       redirect_to rules_path, notice: "ルール「#{@rule.name}」を編集しました"
     else
@@ -38,9 +36,8 @@ class RulesController < ApplicationController
   end
 
   def destroy
-    rule = current_user.rules.find(params[:id])
-    rule.destroy
-    redirect_to rules_path, notice: "ルール「#{rule.name}」を削除しました"
+    @rule.destroy
+    redirect_to rules_path, notice: "ルール「#{@rule.name}」を削除しました"
   end
 
   private
@@ -48,5 +45,13 @@ class RulesController < ApplicationController
   def rule_params
     params.require(:rule).permit(:name, :haikyu_genten, :genten, :uma,
                                  :tobi, :fraction_process, :tobi_prize, :rate)
+  end
+
+  def require_correct_user
+    @rule = current_user.payments.find_by(id: params[:id])
+    return if @rule
+
+    flash[:danger] = '権限がありません'
+    redirect_to root_url
   end
 end

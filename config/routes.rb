@@ -28,6 +28,10 @@ Rails.application.routes.draw do
   end
 
   controller :rules do
-    resources :rules
+    resources :rules, except: :show
+  end
+
+  controller :leagues do
+    resources :leagues
   end
 end

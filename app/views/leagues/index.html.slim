@@ -1,0 +1,18 @@
+- content_for(:title) { '対局一覧' }
+
+.content-container
+  h1.section-title 対局一覧
+  - if @leagues.any?
+    .rule-table
+      table
+        thead
+          tr
+            th= League.human_attribute_name(:created_at)
+            th 参加人数
+        tbody
+          - @leagues.each do |league|
+            tr
+              td= league.created_at
+              td= "#{league.users.count}"
+
+  = link_to '新規対局作成', new_league_path, class: 'btn'
