@@ -242,10 +242,10 @@ ja:
         genten40000: 40000
       uma:
         uma_no: なし
-        uma5_10: 5-10（ゴットー）
-        uma_10_20: 10-20（ワンツー）
-        uma_10_30: 10-30（ワンスリー）
-        uma_20_30: 20-30（ツースリー）
+        uma5_10: 5-10
+        uma_10_20: 10-20
+        uma_10_30: 10-30
+        uma_20_30: 20-30
       tobi:
         tobi_no: なし
         tobi_yes: あり
@@ -253,6 +253,6 @@ ja:
         fraction_process_no: 処理しない
         fraction_process_round_down: 切り捨て
         fraction_process_round_up: 切り上げ
-        fraction_process_decide_by_genten: 原点以上で切り捨て、原点未満で切り上げ
+        fraction_process_decide_by_genten: 原点以上切り捨て、原点未満切り上げ
         fraction_process_round4: 四捨五入
         fraction_process_round5: 五捨六入

@@ -1,6 +1,10 @@
 class RulesController < ApplicationController
   before_action :require_login
 
+  def index
+    @rules = current_user.rules
+  end
+
   def new
     @rule = current_user.rules.build(haikyu_genten: :haikyu_genten25000,
                                      genten: :genten30000,
@@ -18,6 +22,25 @@ class RulesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit
+    @rule = current_user.rules.find(params[:id])
+  end
+
+  def update
+    @rule = current_user.rules.find(params[:id])
+    if @rule.update(rule_params)
+      redirect_to rules_path, notice: "ルール「#{@rule.name}」を編集しました"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    rule = current_user.rules.find(params[:id])
+    rule.destroy
+    redirect_to rules_path, notice: "ルール「#{rule.name}」を削除しました"
   end
 
   private

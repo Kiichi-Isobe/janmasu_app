@@ -12,7 +12,7 @@ class User < ApplicationRecord
                                     dependent: :destroy
   has_many :rules, dependent: :destroy
 
-  validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 30 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-zA-Z]*\z/.freeze
   validates :name, format: { with: VALID_NAME_REGEX, message: 'は半角英数字で入力してください' }
 

@@ -1,0 +1,5 @@
+- content_for(:title) { 'ルール編集' }
+
+.content-container
+  h1.section-title ルール編集
+  = render partial: 'form', locals: { rule: @rule }
