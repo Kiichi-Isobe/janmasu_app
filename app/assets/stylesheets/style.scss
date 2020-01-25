@@ -487,21 +487,35 @@ footer {
   width: 100%;
   .user-profile-container {
     width: 30%;
-    border-right: 1px solid dimgray;
+    border-right: 2px solid dimgray;
+    .user-name {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .user-friend {
+      margin-bottom: 5px;
+    }
   }
   .user-statistics-container {
     width: 70%;
   }
 }
 
+// フレンド一覧画面
+
 .user-friend-list {
-  width: 350px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   list-style: none;
   li {
     display: flex;
+    width: 300px;
     align-items: center;
-    margin-top: 20px;
+    margin: 20px;
+    padding: 10px 0;
+    background-color: whitesmoke;
+    border-radius: 5px;
     .user-name {
       display: block;
       width: 150px;
@@ -519,9 +533,12 @@ footer {
 
 @media (max-width: 768px) {
   .user-friend-list {
-    width: 90%;
+    display: block;
     li {
       display: block;
+      max-width: 300px;
+      width: 90%;
+      margin: 0 auto;
       margin-top: 30px;
       .user-name {
         width: 100%;

@@ -3,7 +3,7 @@
 .content-container
   .user-container
     .user-profile-container
-      p.user-name= @user.name
+      .user-name= @user.name
       .user-friend= link_to "友達#{@user.followings.count}人", friend_user_path
       = render partial: 'follow_form', locals: { user: @user }
 
