@@ -67,3 +67,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'html2slim'
 gem 'slim-rails'
 gem 'ransack'
+gem 'enum_help'

@@ -302,21 +302,17 @@ footer {
   font-size: 1.4rem;
   .form-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 30px;
-    padding-right: 80px;
     label {
-      width: 140px;
-      flex-shrink: 0;
       order: 1;
-      padding-right: 10px;
-      text-align: right;
-      border-bottom: 1px solid transparent;
+      text-align: left;
+      margin-bottom: 10px;
     }
     input {
+      order: 2;
       width: 100%;
       height: 35px;
-      order: 2;
       background-color: transparent;
       color: dimgray;
       border: 1px solid dimgray;
@@ -347,17 +343,23 @@ footer {
     display: block;
     text-align: left;
     margin-bottom: 30px;
-    label {
+    .form-check-title {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .form-check-label {
       display: inline-block;
       position: relative;
-      width: 140px;
+      width: auto;
       padding-right: 10px;
-      text-align: right;
+      margin: 10px 40px 10px 0;
+      font-size: 1.2rem;
+      text-align: start;
       &::after {
         content: "";
         position: absolute;
         top: -3px;
-        left: 140px;
+        left: 100%;
         width: 20px;
         height: 20px;
         border: 1px solid dimgray;
@@ -410,26 +412,6 @@ footer {
   &:hover,
   &:focus {
     background-color: lightcoral;
-  }
-}
-
-@media (max-width: 768px) {
-  .form {
-    .form-group {
-      flex-direction: column;
-      align-items: flex-start;
-      padding-right: 0;
-      label {
-        margin-bottom: 10px;
-        text-align: start;
-      }
-    }
-    .form-check label {
-      width: auto;
-      &::after {
-        left: 100%;
-      }
-    }
   }
 }
 

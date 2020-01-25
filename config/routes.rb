@@ -26,4 +26,8 @@ Rails.application.routes.draw do
   controller :relationships do
     resources :relationships, only: %i[create destroy]
   end
+
+  controller :rules do
+    resources :rules
+  end
 end

@@ -1,0 +1,21 @@
+- content_for(:title) { '新規ルール作成' }
+
+.content-container
+  h1.section-title 新規ルール作成
+  = form_with model: @rule, local: true, class: 'form' do |f|
+    = render partial: 'shared/error_message', locals: { object: @rule }
+    .form-group
+      = f.text_field :name, autofocus: true
+      = f.label :name
+    = render partial: 'rule_form', locals: {f: f, attribute: :haikyu_genten}
+    = render partial: 'rule_form', locals: {f: f, attribute: :genten}
+    = render partial: 'rule_form', locals: {f: f, attribute: :uma}
+    = render partial: 'rule_form', locals: {f: f, attribute: :tobi}
+    = render partial: 'rule_form', locals: {f: f, attribute: :fraction_process}
+    .form-group
+      = f.number_field :tobi_prize
+      = f.label :tobi_prize
+    .form-group
+      = f.number_field :rate
+      = f.label :rate
+    = f.submit '登録する', class: 'btn'

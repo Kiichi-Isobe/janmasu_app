@@ -8,6 +8,7 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
     models:
       user: ユーザー
+      rule: ルール
     attributes:
       user:
         id: ID
@@ -19,6 +20,16 @@ ja:
         password_confirmation: パスワード(確認)
         created_at: 作成日時
         updated_at: 更新日時
+      rule:
+        id: ID
+        name: ルール名
+        haikyu_genten: 配給原点
+        genten: 原点
+        uma: ウマ
+        tobi: トビ
+        fraction_process: 端数処理
+        tobi_prize: トビ賞
+        rate: レート
   date:
     abbr_day_names:
       - 日
@@ -217,3 +228,31 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+  enums:
+    rule:
+      haikyu_genten:
+        haikyu_genten20000: 20000
+        haikyu_genten25000: 25000
+        haikyu_genten30000: 30000
+        haikyu_genten35000: 35000
+      genten:
+        genten20000: 20000
+        genten25000: 25000
+        genten30000: 30000
+        genten40000: 40000
+      uma:
+        uma_no: なし
+        uma5_10: 5-10（ゴットー）
+        uma_10_20: 10-20（ワンツー）
+        uma_10_30: 10-30（ワンスリー）
+        uma_20_30: 20-30（ツースリー）
+      tobi:
+        tobi_no: なし
+        tobi_yes: あり
+      fraction_process:
+        fraction_process_no: 処理しない
+        fraction_process_round_down: 切り捨て
+        fraction_process_round_up: 切り上げ
+        fraction_process_decide_by_genten: 原点以上で切り捨て、原点未満で切り上げ
+        fraction_process_round4: 四捨五入
+        fraction_process_round5: 五捨六入

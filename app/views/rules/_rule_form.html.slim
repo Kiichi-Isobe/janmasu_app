@@ -1,0 +1,5 @@
+.form-check
+  = f.label attribute, class: 'form-check-title'
+  = f.collection_radio_buttons attribute, Rule.send("#{attribute.to_s.pluralize}_i18n").invert, :last, :first do |b|
+    = b.radio_button
+    = b.label class: 'form-check-label'

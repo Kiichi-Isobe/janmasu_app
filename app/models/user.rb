@@ -7,10 +7,10 @@ class User < ApplicationRecord
                                      class_name: 'Relationship',
                                      dependent: :destroy
   has_many :followings, through: :following_relationships
-
   has_many :followed_relationships, foreign_key: 'following_id',
                                     class_name: 'Relationship',
                                     dependent: :destroy
+  has_many :rules, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-zA-Z]*\z/.freeze
