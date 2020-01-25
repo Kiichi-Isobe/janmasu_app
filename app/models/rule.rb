@@ -22,4 +22,24 @@ class Rule < ApplicationRecord
   validates :fraction_process, presence: true
   validates :tobi_prize, presence: true, numericality: { only_integer: true }
   validates :rate, presence: true, numericality: { only_integer: true }
+
+  validate  :genten_greater_than_haikyu_genten
+  validate  :rate_divisible_by_10
+  validate  :tobi_prize_divisible_by_100
+
+  private
+
+  def genten_greater_than_haikyu_genten
+    return if Rule.haikyu_gentens[haikyu_genten] <= Rule.gentens[genten]
+
+    errors.add :base, '配給原点は原点以下に設定してください'
+  end
+
+  def rate_divisible_by_10
+    errors.add :rate, 'は10P単位で入力してください' if rate % 10 != 0
+  end
+
+  def tobi_prize_divisible_by_100
+    errors.add :tobi_prize, 'は100点単位で入力してください' if tobi_prize % 100 != 0
+  end
 end

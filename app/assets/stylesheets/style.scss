@@ -75,6 +75,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 5;
   width: 100%;
   height: 55px;
   padding: 0 25px;
@@ -136,7 +137,6 @@
     position: fixed;
     top: 0px;
     left: 100vw;
-    z-index: 5;
     width: 250px;
     height: 100vh;
     padding-top: 55px;
@@ -360,15 +360,13 @@ footer {
         background-repeat: no-repeat;
         background-position: -1px 0;
       }
-      &:focus + label {
+      &:checked + label {
         color: darkseagreen;
         &::after {
           border: 2px solid darkseagreen;
+          background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238fbc8f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+          background-position: -1.5px -0.5px;
         }
-      }
-      &:focus:checked + label::after {
-        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%238fbc8f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-        background-position: -1.5px -0.5px;
       }
     }
   }
