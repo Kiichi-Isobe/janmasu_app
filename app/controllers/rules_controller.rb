@@ -19,7 +19,8 @@ class RulesController < ApplicationController
   def create
     @rule = current_user.rules.build(rule_params)
     if @rule.save
-      redirect_to rules_path, notice: '新規ルールを作成しました'
+      flash[:notice] = '新規ルールを作成しました'
+      redirect_back_or rules_path
     else
       render :new
     end
@@ -48,10 +49,7 @@ class RulesController < ApplicationController
   end
 
   def require_correct_user
-    @rule = current_user.payments.find_by(id: params[:id])
-    return if @rule
-
-    flash[:danger] = '権限がありません'
-    redirect_to root_url
+    @rule = current_user.rules.find_by(id: params[:id])
+    redirect_to root_url unless @rule
   end
 end

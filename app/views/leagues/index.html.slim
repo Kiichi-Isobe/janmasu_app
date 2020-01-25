@@ -3,16 +3,22 @@
 .content-container
   h1.section-title 対局一覧
   - if @leagues.any?
-    .rule-table
-      table
+    .table
+      table align='center'
         thead
           tr
             th= League.human_attribute_name(:created_at)
+            th= Rule.human_attribute_name(:name)
             th 参加人数
+            th
         tbody
           - @leagues.each do |league|
             tr
-              td= league.created_at
-              td= "#{league.users.count}"
+              td= human_time(league.created_at)
+              td data-label="#{Rule.human_attribute_name(:name)}"
+                = league.rule.name
+              td data-label='参加人数'
+                = "#{league.users.count}"
+              td= link_to '削除', league_path(league), method: :delete, class: 'danger', data: { confirm: "対局「#{league.created_at}」を削除します。よろしいですか？" }
 
   = link_to '新規対局作成', new_league_path, class: 'btn'

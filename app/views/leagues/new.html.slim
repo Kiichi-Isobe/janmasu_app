@@ -5,11 +5,11 @@
   = form_with model: @league, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @league }
     .form-group
-      = f.select :rule_id, options_for_select(@rules), autofocus: true
+      = f.collection_select :rule_id, @rules, :id, :name
       = f.label :rule_id
-    ul.user-friend-list
-      = f.collection_check_boxes :user_ids, @followings, :id, :name do |user|
-        li
-          .user-name= user.text
-          .user-follow= user.check_box
+    .form-check
+      = f.label :user_ids, 'ユーザー', class: 'form-check-title'
+      = f.collection_check_boxes :user_ids, @followings, :id, :name do |b|
+          = b.check_box
+          = b.label class: 'form-check-label'
     = f.submit '登録する', class: 'btn'

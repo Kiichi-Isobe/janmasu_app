@@ -315,6 +315,23 @@ footer {
         }
       }
     }
+    select {
+      order: 2;
+      width: 100%;
+      height: 35px;
+      background-color: transparent;
+      color: dimgray;
+      border: 1px solid dimgray;
+      border-radius: 5px;
+      outline: none;
+      &:focus {
+        border: 2px solid darkseagreen;
+        color: darkseagreen;
+        + label {
+          color: darkseagreen;
+        }
+      }
+    }
     .field_with_errors {
       input {
         border: 2px solid lightcoral;
@@ -513,7 +530,7 @@ footer {
 
 // テーブル
 
-.rule-table {
+.table {
   width: 90%;
   margin: 0 auto 50px;
   overflow-x: auto;
@@ -521,7 +538,7 @@ footer {
   font-size: 1.2rem;
   word-break: break-all;
   table {
-    width: 100%;
+    display: inline-block;
     th {
       background-color: skyblue;
       border: solid 1px darkgray;
@@ -539,34 +556,38 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .rule-table {
+  .table {
     overflow-x: hidden;
     white-space: normal;
-    thead {
-      display: none;
-    }
-    tr {
+    table {
+      display: table;
       width: 100%;
-      td {
-        display: flex;
-        justify-content: space-between;
+      thead {
+        display: none;
+      }
+      tr {
         width: 100%;
-        border-width: 0 1px 1px 1px;
-        text-align: right;
-        &:first-child {
-          justify-content: center;
-          text-align: center;
-          border-width: 1px;
-          background-color: skyblue;
-          color: whitesmoke;
-        }
-        &:last-child {
-          margin-bottom: 30px;
-        }
-        &::before {
-          content: attr(data-label);
-          flex-shrink: 0;
-          margin-right: 5px;
+        td {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          border-width: 0 1px 1px 1px;
+          text-align: right;
+          &:first-child {
+            justify-content: center;
+            text-align: center;
+            border-width: 1px;
+            background-color: skyblue;
+            color: whitesmoke;
+          }
+          &:last-child {
+            margin-bottom: 30px;
+          }
+          &::before {
+            content: attr(data-label);
+            flex-shrink: 0;
+            margin-right: 5px;
+          }
         }
       }
     }
