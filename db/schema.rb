@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_080040) do
+ActiveRecord::Schema.define(version: 2020_01_26_021958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_results", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "game_id"
+    t.bigint "league_id"
+    t.integer "score"
+    t.integer "calc_score"
+    t.integer "rank"
+    t.boolean "tobi"
+    t.boolean "tobasi"
+    t.integer "rate_score"
+    t.integer "guest_num"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_results_on_game_id"
+    t.index ["league_id"], name: "index_game_results_on_league_id"
+    t.index ["user_id"], name: "index_game_results_on_user_id"
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.bigint "league_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_games_on_league_id"
+  end
 
   create_table "leagues", force: :cascade do |t|
     t.bigint "user_id"
@@ -71,6 +96,10 @@ ActiveRecord::Schema.define(version: 2020_01_25_080040) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "game_results", "games"
+  add_foreign_key "game_results", "leagues"
+  add_foreign_key "game_results", "users"
+  add_foreign_key "games", "leagues"
   add_foreign_key "leagues", "rules"
   add_foreign_key "leagues", "users"
   add_foreign_key "rules", "users"

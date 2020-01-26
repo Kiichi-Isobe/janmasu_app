@@ -1,0 +1,18 @@
+- content_for(:title) { '新規ゲーム作成' }
+
+.content-container
+  h1.section-title 新規ゲーム作成
+  = form_with model: @game, local: true, class: 'form' do |f|
+    = render partial: 'shared/error_message', locals: { object: @game }
+    = f.hidden_field :league_id, value: @league.id
+    - @game.game_results.each do |game_result|
+      = f.fields_for :game_results, game_result do |game_result_fields|
+        .form-group
+          = game_result_fields.number_field :score
+          - unless game_result.user_id.nil?
+            = game_result_fields.hidden_field :user_id, value: game_result.user_id
+            = game_result_fields.label :score, game_result.user.name
+          - else
+            = game_result_fields.hidden_field :guest_num, value: game_result.guest_num
+            = game_result_fields.label :score, "ゲスト#{game_result.guest_num}"
+    = f.submit '登録する', class: 'btn'

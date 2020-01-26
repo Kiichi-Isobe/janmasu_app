@@ -310,7 +310,7 @@ footer {
       &:focus {
         border: 2px solid darkseagreen;
         color: darkseagreen;
-        + label {
+        ~ label {
           color: darkseagreen;
         }
       }

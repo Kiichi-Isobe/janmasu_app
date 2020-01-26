@@ -4,7 +4,7 @@
   h1.section-title 対局一覧
   - if @leagues.any?
     .table
-      table align='center'
+      table
         thead
           tr
             th= League.human_attribute_name(:created_at)
@@ -14,7 +14,7 @@
         tbody
           - @leagues.each do |league|
             tr
-              td= human_time(league.created_at)
+              td= link_to human_time(league.created_at), league
               td data-label="#{Rule.human_attribute_name(:name)}"
                 = league.rule.name
               td data-label='参加人数'

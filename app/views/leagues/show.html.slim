@@ -1,0 +1,15 @@
+- content_for(:title) { '対局詳細' }
+
+.content-container
+  h1.section-title 対局詳細
+  - if @league.games.any?
+    .table
+      table
+        thead
+          tr
+            th
+            - @league.users.each do |user|
+              th= user.name
+        tbody
+
+  = link_to '新規ゲーム作成', new_game_path(league_id: @league.id), class: 'btn'

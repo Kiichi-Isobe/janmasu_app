@@ -23,15 +23,8 @@ Rails.application.routes.draw do
     get '/logout', action: :destroy
   end
 
-  controller :relationships do
-    resources :relationships, only: %i[create destroy]
-  end
-
-  controller :rules do
-    resources :rules, except: :show
-  end
-
-  controller :leagues do
-    resources :leagues
-  end
+  resources :relationships, only: %i[create destroy]
+  resources :rules, except: :show
+  resources :leagues
+  resources :games
 end

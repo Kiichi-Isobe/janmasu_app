@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :rules, dependent: :destroy
   has_many :participations, dependent: :destroy
   has_many :leagues, through: :participations
+  has_many :game_results, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 30 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-zA-Z]*\z/.freeze

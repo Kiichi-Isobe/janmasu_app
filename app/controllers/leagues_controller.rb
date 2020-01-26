@@ -1,11 +1,13 @@
 class LeaguesController < ApplicationController
   before_action :require_login
   before_action :require_rule, only: :new
-  before_action :require_correct_user, only: :destroy
+  before_action :require_correct_user, only: %i[show destroy]
 
   def index
     @leagues = current_user.leagues
   end
+
+  def show; end
 
   def new
     @league = League.new
