@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_26_021958) do
+ActiveRecord::Schema.define(version: 2020_01_26_143849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,11 @@ ActiveRecord::Schema.define(version: 2020_01_26_021958) do
     t.bigint "user_id"
     t.bigint "game_id"
     t.bigint "league_id"
-    t.integer "score"
+    t.integer "score", null: false
     t.integer "calc_score"
     t.integer "rank"
-    t.boolean "tobi"
-    t.boolean "tobasi"
+    t.boolean "tobi", null: false
+    t.boolean "tobasi", null: false
     t.integer "rate_score"
     t.integer "guest_num"
     t.datetime "created_at", null: false
@@ -41,12 +41,15 @@ ActiveRecord::Schema.define(version: 2020_01_26_021958) do
   end
 
   create_table "leagues", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "rule_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["rule_id"], name: "index_leagues_on_rule_id"
-    t.index ["user_id"], name: "index_leagues_on_user_id"
+    t.integer "haikyu_genten", null: false
+    t.integer "genten", null: false
+    t.integer "uma", null: false
+    t.integer "tobi", null: false
+    t.integer "fraction_process", null: false
+    t.integer "tobi_prize", null: false
+    t.integer "rate", null: false
   end
 
   create_table "participations", force: :cascade do |t|
@@ -100,7 +103,5 @@ ActiveRecord::Schema.define(version: 2020_01_26_021958) do
   add_foreign_key "game_results", "leagues"
   add_foreign_key "game_results", "users"
   add_foreign_key "games", "leagues"
-  add_foreign_key "leagues", "rules"
-  add_foreign_key "leagues", "users"
   add_foreign_key "rules", "users"
 end

@@ -1,6 +1,5 @@
 class Rule < ApplicationRecord
   belongs_to :user
-  has_many :leagues, dependent: :destroy
 
   enum haikyu_genten: { haikyu_genten20000: 20_000, haikyu_genten25000: 25_000,
                         haikyu_genten30000: 30_000, haikyu_genten35000: 35_000 }
@@ -27,6 +26,16 @@ class Rule < ApplicationRecord
   validate  :genten_greater_than_haikyu_genten
   validate  :rate_divisible_by_10
   validate  :tobi_prize_divisible_by_100
+
+  def rule_attr
+    need_attr = attributes
+    need_attr.delete('id')
+    need_attr.delete('user_id')
+    need_attr.delete('name')
+    need_attr.delete('created_at')
+    need_attr.delete('updated_at')
+    need_attr
+  end
 
   private
 

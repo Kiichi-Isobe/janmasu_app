@@ -33,8 +33,6 @@ ja:
         rate: レート
       league:
         id: ID
-        rule: ルール
-        rule_id: ルール
         created_at: 作成日時
 
   date:

@@ -17,6 +17,7 @@ class LeaguesController < ApplicationController
 
   def create
     @league = current_user.leagues.build(league_params)
+    @league.rule_params(params[:league][:rule_id])
     @rules = current_user.rules
     @followings = current_user.followings
 
@@ -36,7 +37,7 @@ class LeaguesController < ApplicationController
 
   def league_params
     params[:league][:user_ids].push(current_user.id.to_s)
-    params.require(:league).permit(:rule_id, user_ids: [])
+    params.require(:league).permit(user_ids: [])
   end
 
   def require_correct_user

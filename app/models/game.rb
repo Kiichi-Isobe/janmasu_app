@@ -29,12 +29,38 @@ class Game < ApplicationRecord
     add_calc_score
   end
 
+  def tie_score?
+    score_set = Set.new
+    game_results.each do |game_result|
+      score_set.add(game_result.score)
+    end
+    score_set.size != game_results.size
+  end
+
+  def add_calc_score
+    sum_score = 0
+    game_results.order(rank: :desc).each do |game_result|
+      if game_result.rank == 1
+        calc_score = -1 * sum_score
+      else
+        calc_score = round_score(game_result.score)
+        calc_score -= Rule.gentens[league.genten]
+        calc_score += calc_uma(game_result.rank) + calc_tobi_tobasi(game_result)
+        sum_score  += calc_score
+      end
+      game_result.update_attributes(calc_score: calc_score)
+      game_result.update_attributes(
+        rate_score: (calc_score / 1000.to_f * league.rate).round
+      )
+    end
+  end
+
   private
 
   def score_num_equal_to_haikyu_genten
-    return if score_sum == 4 * Rule.haikyu_gentens[league.rule.haikyu_genten]
+    return if score_sum == 4 * Rule.haikyu_gentens[league.haikyu_genten]
 
-    errors.add :base, '点数の合計が正しくありません'
+    errors.add :base, '点数の合計が配給原点と等しくなるように入力してください'
   end
 
   def score_sum
@@ -54,7 +80,7 @@ class Game < ApplicationRecord
     end
     return if rank.size == game_results.size
 
-    errors.add :game_results_rank, 'が正しくありません'
+    errors.add :base, '順位が正しくありません'
   end
 
   def has_4_game_results
@@ -68,17 +94,17 @@ class Game < ApplicationRecord
   end
 
   def not_has_tobi
-    return if league.rule.tobi == 'tobi_yes'
+    return if league.tobi == 'tobi_yes'
 
     error_flag = 0
     game_results.each do |game_result|
       error_flag = 1 if game_result.tobi || game_result.tobasi
     end
-    errors.add :game_results_tobi, 'なしのルールに設定されています' if error_flag == 1
+    errors.add :base, 'トビなしのルールに設定されています' if error_flag == 1
   end
 
   def correct_tobi
-    return if league.rule.tobi == 'tobi_no'
+    return if league.tobi == 'tobi_no'
 
     error_flag = 0
     tobi_cnt = 0
@@ -93,7 +119,7 @@ class Game < ApplicationRecord
     error_flag = 1 if tobi_cnt != 0 && tobasi_cnt != 1
     error_flag = 1 if tobi_cnt.zero? && tobasi_cnt != 0
 
-    errors.add :game_results_tobi, 'の設定が正しくありません' if error_flag == 1
+    errors.add :base, 'トビの指定が正しくありません' if error_flag == 1
   end
 
   def add_rank
@@ -104,26 +130,8 @@ class Game < ApplicationRecord
     end
   end
 
-  def add_calc_score
-    sum_score = 0
-    game_results.order(:score).each do |game_result|
-      if game_result.rank == 1
-        calc_score = -1 * sum_score
-      else
-        calc_score = round_score(game_result.score)
-        calc_score -= Rule.gentens[league.rule.genten]
-        calc_score += calc_uma(game_result.rank) + calc_tobi_tobasi(game_result)
-        sum_score  += calc_score
-      end
-      game_result.update_attributes(calc_score: calc_score)
-      game_result.update_attributes(
-        rate_score: (calc_score / 1000.to_f * league.rule.rate).round
-      )
-    end
-  end
-
   def round_score(score)
-    case league.rule.fraction_process
+    case league.fraction_process
     when 'fraction_process_no'
       score
     when 'fraction_process_round_down'
@@ -131,7 +139,7 @@ class Game < ApplicationRecord
     when 'fraction_process_round_up'
       score.ceil(-3)
     when 'fraction_process_decide_by_genten'
-      if score < Rule.gentens[current_rule.genten]
+      if score < Rule.gentens[league.genten]
         score.ceil(-3)
       else
         score.truncate(-3)
@@ -144,7 +152,7 @@ class Game < ApplicationRecord
   end
 
   def calc_uma(rank)
-    if league.rule.uma == 'uma_no'
+    if league.uma == 'uma_no'
       0
     else
       uma_score(rank)
@@ -154,11 +162,11 @@ class Game < ApplicationRecord
   def uma_score(rank)
     case rank
     when 4
-      league.rule.uma.split('_')[2].to_i * -1000
+      league.uma.split('_')[2].to_i * -1000
     when 3
-      league.rule.uma.split('_')[1].to_i * -1000
+      league.uma.split('_')[1].to_i * -1000
     else
-      league.rule.uma.split('_')[1].to_i * 1000
+      league.uma.split('_')[1].to_i * 1000
     end
   end
 
@@ -168,7 +176,7 @@ class Game < ApplicationRecord
 
   def tobi(game_result)
     if game_result.tobi
-      -1 * league.rule.tobi_prize
+      -1 * league.tobi_prize
     else
       0
     end
@@ -176,7 +184,7 @@ class Game < ApplicationRecord
 
   def tobasi(game_result)
     if game_result.tobasi
-      game_results.where(tobi: true).size * league.rule.tobi_prize
+      game_results.where(tobi: true).size * league.tobi_prize
     else
       0
     end
