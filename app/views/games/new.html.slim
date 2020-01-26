@@ -4,9 +4,10 @@
   h1.section-title 新規ゲーム作成
   = form_with model: @game, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @game }
-    = f.hidden_field :league_id, value: @league.id
+    = hidden_field_tag :league_id, @league.id
     - @game.game_results.each do |game_result|
       = f.fields_for :game_results, game_result do |game_result_fields|
+        = game_result_fields.hidden_field :league_id, value: @league.id
         .form-group
           = game_result_fields.number_field :score
           - unless game_result.user_id.nil?
@@ -15,4 +16,10 @@
           - else
             = game_result_fields.hidden_field :guest_num, value: game_result.guest_num
             = game_result_fields.label :score, "ゲスト#{game_result.guest_num}"
+        .form-check
+          = game_result_fields.check_box :tobi
+          = game_result_fields.label :tobi, '飛んだ', class: 'form-check-label'
+        .form-check
+          = game_result_fields.check_box :tobasi
+          = game_result_fields.label :tobasi, '飛ばした', class: 'form-check-label'
     = f.submit '登録する', class: 'btn'

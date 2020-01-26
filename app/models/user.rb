@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
 
   before_save :downcase_email
+  before_destroy :create_game_results_copy
 
   has_many :following_relationships, foreign_key: 'follower_id',
                                      class_name: 'Relationship',
@@ -47,5 +48,17 @@ class User < ApplicationRecord
   # メールアドレスをすべて小文字にする
   def downcase_email
     email.downcase!
+  end
+
+  def create_game_results_copy
+    game_results.each do |game_result|
+      break unless game_result.league.guests_num != 3
+
+      new_attr = game_result.attributes
+      new_attr.delete('id')
+      new_attr['user_id'] = nil
+      new_attr['guest_num'] = game_result.league.guests_num + 1
+      GameResult.create!(new_attr)
+    end
   end
 end
