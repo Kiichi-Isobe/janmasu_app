@@ -43,6 +43,76 @@ class User < ApplicationRecord
     following_relationships.find_by(following_id: other_user.id)
   end
 
+  def total_score
+    if game_results.any?
+      (game_results.sum(:calc_score) / 1000.to_f).round(1)
+    else
+      0.0
+    end
+  end
+
+  def average_score
+    if game_results.any?
+      (game_results.average(:calc_score) / 1000.to_f).round(2)
+    else
+      0.0
+    end
+  end
+
+  def average_rank
+    if game_results.any?
+      game_results.average(:rank).round(2)
+    else
+      0.0
+    end
+  end
+
+  def top_percentage
+    if game_results.any?
+      (game_results.where(rank: 1).size / game_results.size.to_f).round(2)
+    else
+      0.0
+    end
+  end
+
+  def rentai_percentage
+    if game_results.any?
+      (game_results.where(
+        '(game_results.rank = ?) OR (game_results.rank = ?)', 1, 2
+      ).size / game_results.size.to_f).round(2)
+    else
+      0.0
+    end
+  end
+
+  def bottom_percentage
+    if game_results.any?
+      (game_results.where(rank: 4).size / game_results.size.to_f).round(2)
+    else
+      0.0
+    end
+  end
+
+  def tobi_percentage
+    results_with_tobi =
+      game_results.joins(:league).where('leagues.tobi' => 'tobi_yes')
+    if results_with_tobi.any?
+      (game_results.where(
+        tobi: true
+      ).size / results_with_tobi.size.to_f).round(2)
+    else
+      0.0
+    end
+  end
+
+  def total_rate_score
+    if game_results.any?
+      game_results.sum(:rate_score)
+    else
+      0
+    end
+  end
+
   private
 
   # メールアドレスをすべて小文字にする

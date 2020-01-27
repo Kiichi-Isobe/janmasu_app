@@ -3,7 +3,7 @@
 .content-container
   h1.section-title 対局詳細
   - if @league.games.any?
-    .table
+    .game-table
       table
         thead
           tr
@@ -20,14 +20,20 @@
             tr
               td= "第#{i}ゲーム"
               - @league.users.each do |user|
-                - if game.game_results.find_by(user_id: user.id)
-                  td= round_calc_score(@league.fraction_process, game.game_results.find_by(user_id: user.id).calc_score)
+                - if game_result = game.game_results.find_by(user_id: user.id)
+                  - if game_result.tobi
+                    td.danger= round_calc_score(@league.fraction_process, game_result.calc_score)
+                  - else
+                    td= round_calc_score(@league.fraction_process, game_result.calc_score)
                 - else
                   td
               - if @league.need_guests?
                 - @league.guests_num.times do |i|
-                  - if game.game_results.find_by(guest_num: i + 1)
-                    td= round_calc_score(@league.fraction_process, game.game_results.find_by(guest_num: i + 1).calc_score)
+                  - if game_result = game.game_results.find_by(guest_num: i + 1)
+                    - if game_result.tobi
+                      td.danger= round_calc_score(@league.fraction_process, game_result.calc_score)
+                    - else
+                      td= round_calc_score(@league.fraction_process, game_result.calc_score)
                   - else
                     td
               td= link_to '編集', edit_game_path(game)

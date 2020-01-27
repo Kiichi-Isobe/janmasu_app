@@ -4,6 +4,7 @@ class Game < ApplicationRecord
   accepts_nested_attributes_for :game_results, allow_destroy: true
 
   validate :score_num_equal_to_haikyu_genten
+  validate :score_divisible_by_100
   validate :correct_rank
   validate :has_4_game_results
   validate :not_has_tobi
@@ -66,9 +67,19 @@ class Game < ApplicationRecord
   def score_sum
     res = 0
     game_results.each do |game_result|
-      res += game_result.score unless game_result.score.blank?
+      res += game_result.score unless game_result.score.nil?
     end
     res
+  end
+
+  def score_divisible_by_100
+    error_flag = 0
+    game_results.each do |game_result|
+      break if game_result.score.nil?
+
+      error_flag = 1 if game_result.score % 100 != 0
+    end
+    errors.add :base, '100点単位で入力してください' if error_flag == 1
   end
 
   def correct_rank

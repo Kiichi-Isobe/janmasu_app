@@ -8,3 +8,35 @@
       = render partial: 'follow_form', locals: { user: @user }
 
     .user-statistics-container
+      - if @user.game_results.any?
+        table
+          tr
+            th 対戦数
+            td= @user.game_results.size
+          tr
+            th 通算得点
+            td= @user.total_score
+          tr
+            th 平均得点
+            td= @user.average_score
+          tr
+            th 通算順位
+            td= show_total_rank(@user)
+          tr
+            th 平均順位
+            td= @user.average_rank
+          tr
+            th トップ率
+            td= @user.top_percentage
+          tr
+            th 連帯率
+            td= @user.rentai_percentage
+          tr
+            th ラス率
+            td= @user.bottom_percentage
+          tr
+            th トビ率
+            td= @user.tobi_percentage
+          tr
+            th 通算収支
+            td= @user.total_rate_score
