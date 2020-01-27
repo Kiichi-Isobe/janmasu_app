@@ -1,0 +1,53 @@
+.game-table
+  table
+    thead
+      tr
+        th
+        - league.users.each do |user|
+          th= link_to user.name, user
+        - if league.need_guests?
+          - league.guests_num.times do |i|
+            th= "ゲスト#{i + 1}"
+        th
+        th
+    tbody
+      - league.games.each.with_index(1) do |game, i|
+        tr
+          td= "第#{i}ゲーム"
+          - league.users.each do |user|
+            - if game_result = game.game_results.find_by(user_id: user.id)
+              - if game_result.tobi
+                td.danger= round_calc_score(league.fraction_process, game_result.calc_score)
+              - else
+                td= round_calc_score(league.fraction_process, game_result.calc_score)
+            - else
+              td
+          - if league.need_guests?
+            - league.guests_num.times do |i|
+              - if game_result = game.game_results.find_by(guest_num: i + 1)
+                - if game_result.tobi
+                  td.danger= round_calc_score(league.fraction_process, game_result.calc_score)
+                - else
+                  td= round_calc_score(league.fraction_process, game_result.calc_score)
+              - else
+                td
+          td= link_to '編集', edit_game_path(game)
+          td= link_to '削除', game_path(game), method: :delete, class: 'danger', data: { confirm: "ゲーム「#{game.created_at}」を削除します。よろしいですか？" }
+      tr
+        td 合計
+        - league.users.each do |user|
+          td= sum_user_results(league, user.id)
+        - if league.need_guests?
+          - league.guests_num.times do |i|
+            td= sum_guest_results(league, i+1)
+        td
+        td
+      tr
+        td 収支
+        - league.users.each do |user|
+          td= rate_user_results(league, user.id)
+        - if league.need_guests?
+          - league.guests_num.times do |i|
+            td= rate_guest_results(league, i+1)
+        td
+        td

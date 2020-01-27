@@ -1,19 +1,20 @@
 - content_for(:title) { 'ユーザー一覧' }
 
 .content-container
-  table.admin-user-table
-    thead
-      tr
-        th= User.human_attribute_name(:name)
-        th= User.human_attribute_name(:email)
-        th= User.human_attribute_name(:created_at)
-        th
-    tbody
-      - @users.each do |user|
+  .admin-user-table
+    table
+      thead
         tr
-          td= link_to user.name, admin_user_path(user)
-          td= user.email
-          td= user.created_at
-          td= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: 'danger'
-  
+          th= User.human_attribute_name(:name)
+          th= User.human_attribute_name(:email)
+          th= User.human_attribute_name(:created_at)
+          th
+      tbody
+        - @users.each do |user|
+          tr
+            td= link_to user.name, admin_user_path(user)
+            td= user.email
+            td= user.created_at
+            td= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: 'danger'
+    
   = link_to '新規作成', new_admin_user_path, class: 'btn'

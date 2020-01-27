@@ -253,7 +253,7 @@
 }
 
 .content-container {
-  max-width: 1000px;
+  max-width: 1200px;
   width: 90%;
   margin: 80px auto;
   padding: 50px 0;
@@ -449,15 +449,22 @@ footer {
 // ユーザー管理画面
 
 .admin-user-table {
+  width: 90%;
   margin: 0 auto 30px;
   font-size: 1rem;
-  th,
-  td {
-    border: 1px solid lightgray;
-    padding: 5px;
-  }
-  a:hover {
-    text-decoration: underline;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  table {
+    display: inline-block;
+    th,
+    td {
+      border: 1px solid lightgray;
+      padding: 5px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -467,18 +474,52 @@ footer {
   display: flex;
   width: 100%;
   .user-profile-container {
-    width: 30%;
+    width: 25%;
     border-right: 2px solid dimgray;
+    a:hover {
+      text-decoration: underline;
+    }
     .user-name {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 10px;
     }
     .user-friend {
       margin-bottom: 5px;
     }
   }
-  .user-statistics-container {
-    width: 70%;
+  .user-info-container {
+    width: 75%;
+    .user-info-title {
+      position: relative;
+      margin-bottom: 50px;
+      font-size: 1.8rem;
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 26px;
+        left: calc(50% - 0.5px);
+        border-left: 1px solid darkgray;
+        height: 25px;
+      }
+    }
+    .league-created-time {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-container {
+    display: block;
+    .user-profile-container {
+      width: 100%;
+      border-right-width: 0;
+      margin-bottom: 30px;
+    }
+    .user-info-container {
+      width: 100%;
+    }
   }
 }
 
@@ -617,6 +658,55 @@ footer {
     }
     a:hover {
       text-decoration: underline;
+    }
+  }
+}
+
+.statistics-table {
+  width: 90%;
+  margin: 0 auto 50px;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-size: 1.2rem;
+  word-break: break-all;
+  table {
+    display: inline-block;
+    th {
+      background-color: skyblue;
+      border: solid 1px darkgray;
+      color: whitesmoke;
+      padding: 10px;
+    }
+    td {
+      border: solid 1px darkgray;
+      padding: 10px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .statistics-table {
+    table {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      th,
+      td {
+        display: block;
+      }
+      th {
+        border-width: 1px 1px 0 1px;
+      }
+      td {
+        border-width: 1px 1px 0 0;
+      }
+      th:last-child,
+      td:last-child {
+        border-bottom-width: 1px;
+      }
     }
   }
 }

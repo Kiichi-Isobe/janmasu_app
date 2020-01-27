@@ -3,40 +3,42 @@
 .content-container
   .user-container
     .user-profile-container
-      .user-name= @user.name
+      h1.user-name= @user.name
       .user-friend= link_to "友達#{@user.followings.count}人", friend_user_path
       = render partial: 'follow_form', locals: { user: @user }
 
-    .user-statistics-container
+    .user-info-container
+      h2.user-info-title 成績
       - if @user.game_results.any?
-        table
-          tr
-            th 対戦数
-            td= @user.game_results.size
-          tr
-            th 通算得点
-            td= @user.total_score
-          tr
-            th 平均得点
-            td= @user.average_score
-          tr
-            th 通算順位
-            td= show_total_rank(@user)
-          tr
-            th 平均順位
-            td= @user.average_rank
-          tr
-            th トップ率
-            td= @user.top_percentage
-          tr
-            th 連帯率
-            td= @user.rentai_percentage
-          tr
-            th ラス率
-            td= @user.bottom_percentage
-          tr
-            th トビ率
-            td= @user.tobi_percentage
-          tr
-            th 通算収支
-            td= @user.total_rate_score
+        .statistics-table
+          table
+            thead
+              tr
+                th 対戦数
+                th 通算得点
+                th 平均得点
+                th 通算順位
+                th 平均順位
+                th トップ率
+                th 連帯率
+                th ラス率
+                th トビ率
+                th 通算収支
+            tbody
+              tr
+                td= @user.game_results.size
+                td= @user.total_score
+                td= @user.average_score
+                td= show_total_rank(@user)
+                td= @user.average_rank
+                td= @user.top_percentage
+                td= @user.rentai_percentage
+                td= @user.bottom_percentage
+                td= @user.tobi_percentage
+                td= @user.total_rate_score
+      
+      h2.user-info-title 最近の対局記録
+      - if @leagues.any?
+        - @leagues.each do |league|
+          p.league-created-time= human_time(league.created_at)
+          = render partial: 'leagues/game_table', locals: { league: league }
