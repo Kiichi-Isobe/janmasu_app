@@ -10,4 +10,7 @@
     .form-group
       = f.password_field :password
       = f.label :password, 'パスワード'
+    .form-check
+      = f.check_box :remember_me
+      = f.label :remember_me, '次回から自動的にログインする', class: 'form-check-label'
     = f.submit 'ログインする', class: 'btn'

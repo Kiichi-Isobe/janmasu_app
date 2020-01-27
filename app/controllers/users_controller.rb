@@ -49,8 +49,6 @@ class UsersController < ApplicationController
 
   def mypage
     @leagues = current_user.leagues.order(created_at: :desc).limit(5)
-    @game = @leagues.first.games.build
-    @game.set_users_and_guests
   end
 
   private
