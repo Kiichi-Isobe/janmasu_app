@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: %i[search show friend]
+  before_action :require_login, except: %i[new create]
+  before_action :require_correct_user, only: %i[edit update]
 
   def show
     @user = User.find(params[:id])
@@ -20,6 +21,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit; end
+
+  def update
+    if @user.update(user_params)
+      redirect_to mypage_url, notice: "ユーザー「#{@user.name}」を編集しました"
+    else
+      render :edit
+    end
+  end
+
   def search
     return if params[:name].nil?
 
@@ -36,9 +47,22 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def mypage
+    @leagues = current_user.leagues.order(created_at: :desc).limit(5)
+    @game = @leagues.first.games.build
+    @game.set_users_and_guests
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def require_correct_user
+    @user = User.find_by(id: params[:id])
+    return if current_user == @user
+
+    redirect_to root_url
   end
 end

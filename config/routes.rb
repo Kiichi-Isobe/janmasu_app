@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   controller :users do
-    resources :users, only: %i[show new create] do
+    resources :users, only: %i[show new create edit update] do
       member do
         get :friend
       end
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    get '/mypage', action: :mypage
   end
 
   controller :sessions do

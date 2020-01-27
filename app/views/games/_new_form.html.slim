@@ -2,5 +2,5 @@
   = render partial: 'shared/error_message', locals: { object: game }
   = hidden_field_tag :league_id, league.id
   - game.game_results.each do |game_result|
-    = render partial: 'common_form', locals: { f: f, game_result: game_result, league: league }
+    = render partial: 'games/common_form', locals: { f: f, game_result: game_result, league: league }
   = f.submit '登録する', class: 'btn'

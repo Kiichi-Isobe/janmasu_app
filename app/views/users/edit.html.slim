@@ -1,0 +1,19 @@
+- content_for(:title) { 'ユーザー編集' }
+
+.content-container
+  h1.section-title ユーザー編集
+  = form_with model: @user, local: true, class: 'form' do |f|
+    = render partial: 'shared/error_message', locals: { object: @user }
+    .form-group
+      = f.text_field :name, autofocus: true
+      = f.label :name
+    .form-group
+      = f.text_field :email
+      = f.label :email
+    .form-group
+      = f.password_field :password
+      = f.label :password
+    .form-group
+      = f.password_field :password_confirmation
+      = f.label :password_confirmation
+    = f.submit '登録する', class: 'btn'

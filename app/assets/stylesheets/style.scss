@@ -262,13 +262,30 @@
 }
 
 .section-title {
-  font-size: 2.5rem;
-  font-weight: bold;
+  position: relative;
+  display: inline-block;
+  font-size: 2.2rem;
   margin-bottom: 40px;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    border-bottom: 1px solid dimgray;
+  }
 }
 
 .danger {
   color: lightcoral;
+}
+
+.mb {
+  margin-bottom: 15px;
+}
+
+.mr {
+  margin-right: 10px;
 }
 
 // フッター
@@ -393,8 +410,11 @@ footer {
 }
 
 .btn {
-  padding: 5px 10px;
+  display: inline-block;
+  max-width: 90%;
+  padding: 10px 10px;
   font-size: 1.4rem;
+  word-break: break-all;
   cursor: pointer;
   outline: none;
   color: darkseagreen;
@@ -476,15 +496,18 @@ footer {
   .user-profile-container {
     width: 25%;
     border-right: 2px solid dimgray;
-    a:hover {
-      text-decoration: underline;
-    }
     .user-name {
       font-size: 2.2rem;
       margin-bottom: 10px;
     }
     .user-friend {
-      margin-bottom: 5px;
+      margin-bottom: 20px;
+      a:hover {
+        text-decoration: underline;
+      }
+      .friend-link {
+        margin-bottom: 5px;
+      }
     }
   }
   .user-info-container {

@@ -1,4 +1,8 @@
 module UsersHelper
+  def date_from_now(time)
+    (Time.now - time) / (24 * 60 * 60)
+  end
+
   def show_total_rank(user)
     rank = user.game_results.group('game_results.rank').size
     (1..4).each do |i|
