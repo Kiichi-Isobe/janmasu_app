@@ -34,7 +34,7 @@
               td data-label="#{Rule.human_attribute_name(:tobi_prize)}"
                 = rule.tobi_prize
               td data-label="#{Rule.human_attribute_name(:rate)}"
-                = rule.rate
+                = "#{rule.rate}P"
               td= link_to '編集', edit_rule_path(rule)
               td= link_to '削除', rule_path(rule), method: :delete, class: 'danger', data: { confirm: "ルール「#{rule.name}」を削除します。よろしいですか？"}
 

@@ -29,8 +29,8 @@ ja:
         uma: ウマ
         tobi: トビ
         fraction_process: 端数処理
-        tobi_prize: トビ賞
-        rate: レート
+        tobi_prize: トビ賞(点)
+        rate: レート(P/1000点)
       league:
         id: ID
         created_at: 作成日時

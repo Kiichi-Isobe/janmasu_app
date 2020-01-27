@@ -35,7 +35,7 @@
                 td= @user.rentai_percentage
                 td= @user.bottom_percentage
                 td= @user.tobi_percentage
-                td= @user.total_rate_score
+                td= "#{@user.total_rate_score}P"
       
       h2.user-info-title 最近の対局記録
       - if @leagues.any?

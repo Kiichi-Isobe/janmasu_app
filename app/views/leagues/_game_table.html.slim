@@ -45,9 +45,9 @@
       tr
         td 収支
         - league.users.each do |user|
-          td= rate_user_results(league, user.id)
+          td= "#{rate_user_results(league, user.id)}P"
         - if league.need_guests?
           - league.guests_num.times do |i|
-            td= rate_guest_results(league, i+1)
+            td= "#{rate_guest_results(league, i+1)}"
         td
         td
