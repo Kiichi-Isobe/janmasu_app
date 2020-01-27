@@ -10,10 +10,15 @@
     .form-group
       = f.text_field :email
       = f.label :email
+    p.form-title パスワードを変更しない場合は、以下は空欄のまま送信してください
+    .form-group
+      = f.password_field :old_password
+      = f.label :old_password, '現在のパスワード'
     .form-group
       = f.password_field :password
-      = f.label :password
+      = f.label :password, '新しいパスワード'
     .form-group
       = f.password_field :password_confirmation
-      = f.label :password_confirmation
+      = f.label :password_confirmation, '新しいパスワード(確認)'
+
     = f.submit '登録する', class: 'btn'

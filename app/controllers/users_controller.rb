@@ -24,6 +24,11 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
+    if params[:user][:password].present? && !@user.authenticate(params[:user][:old_password])
+      @user.errors.add :base, '現在のパスワードが間違っています'
+      render :edit
+      return
+    end
     if @user.update(user_params)
       redirect_to mypage_url, notice: "ユーザー「#{@user.name}」を編集しました"
     else

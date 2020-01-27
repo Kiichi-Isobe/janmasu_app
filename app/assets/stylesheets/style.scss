@@ -303,6 +303,20 @@ footer {
   max-width: 500px;
   margin: 0 auto;
   font-size: 1.4rem;
+  .form-title {
+    position: relative;
+    margin-bottom: 50px;
+    font-size: 1.4rem;
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 26px;
+      left: calc(50% - 0.5px);
+      border-left: 1px solid darkgray;
+      height: 25px;
+    }
+  }
   .form-group {
     display: flex;
     flex-direction: column;
