@@ -449,6 +449,7 @@ footer {
   max-width: 90%;
   padding: 10px 10px;
   font-size: 1.4rem;
+  text-align: center;
   word-break: break-all;
   cursor: pointer;
   outline: none;
@@ -598,7 +599,8 @@ footer {
     border-radius: 5px;
     .user-name {
       display: block;
-      width: 150px;
+      width: 140px;
+      flex-shrink: 0;
       margin-right: 20px;
       text-align: right;
       overflow: hidden;
@@ -607,6 +609,9 @@ footer {
       &:hover {
         color: darkseagreen;
       }
+    }
+    .user-follow {
+      width: 100%;
     }
   }
 }
