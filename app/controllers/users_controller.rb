@@ -1,10 +1,14 @@
 class UsersController < ApplicationController
   before_action :require_login, except: %i[new create]
-  before_action :require_correct_user, only: %i[edit update]
+  before_action :require_correct_user, only: %i[edit update destroy]
 
   def show
     @user = User.find(params[:id])
-    @leagues = @user.leagues.order(created_at: :desc).limit(5)
+    if current_user == @user
+      redirect_to mypage_url
+      return
+    end
+    @leagues = @user.leagues.order(created_at: :desc).page(params[:page])
   end
 
   def new
@@ -36,6 +40,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+    reset_session
+    @user.destroy
+    redirect_to root_url, notice: "ユーザー「#{@user.name}」を削除しました"
+  end
+
   def search
     return if params[:name].nil?
 
@@ -53,7 +66,7 @@ class UsersController < ApplicationController
   end
 
   def mypage
-    @leagues = current_user.leagues.order(created_at: :desc).limit(5)
+    @leagues = current_user.feed.order(created_at: :desc).limit(5)
   end
 
   private

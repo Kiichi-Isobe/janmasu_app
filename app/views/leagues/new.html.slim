@@ -2,13 +2,18 @@
 
 .content-container
   h1.section-title 新規対局作成
+  p.section-annotation
+    | 一度に対局に参加できるユーザーは最大16人です。<br>
+     また、1~3人のユーザーが参加する場合は、<br>
+     4人になるように自動的にゲストが参加します。
+
   = form_with model: @league, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @league }
     .form-group
       = f.collection_select :rule_id, @rules, :id, :name
-      = f.label :rule_id
+      = f.label :rule_id, '使用するルール'
     .form-check
-      = f.label :user_ids, 'ユーザー', class: 'form-check-title'
+      = f.label :user_ids, '参加するユーザー', class: 'form-check-title'
       = f.collection_check_boxes :user_ids, @followings, :id, :name do |b|
           = b.check_box
           = b.label class: 'form-check-label'

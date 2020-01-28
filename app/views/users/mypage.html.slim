@@ -6,11 +6,20 @@
       h1.user-name= current_user.name
       .user-friend
         = link_to "友達#{current_user.followings.size}人", friend_user_path(current_user)
-      - if @leagues.any? && date_from_now(@leagues.first.created_at) < 1.0
-        = link_to '最新の対局にゲームを追加する', new_game_path(league_id: @leagues.first.id), class: 'btn mb mr'
-      - else
-        = link_to '新規対局を作成する', new_league_path, class: 'btn mb mr'
+      .user-btn-container
+        - if current_user.leagues.any? && date_from_now(current_user.leagues.first.created_at) < 1.0
+          = link_to '最新の対局にゲームを追加する', new_game_path(league_id: @leagues.first.id), class: 'btn mb'
+        = link_to '新規対局を作成する', new_league_path, class: 'btn mb'
+        = link_to 'ユーザー設定', edit_user_path(current_user), class: 'btn btn-danger'
 
-      = link_to 'ユーザー設定', edit_user_path(current_user), class: 'btn btn-danger'
-
-    = render partial: 'info', locals: { user: current_user, leagues: @leagues }
+    .user-info-container
+      = render partial: 'statistics', locals: { user: current_user }
+      
+      .user-leagues-container
+        h2.user-info-title 最近の対局記録
+        - if @leagues.any?
+          - @leagues.includes([:users, :games]).each do |league|
+            p.league-created-time= human_time(league.created_at)
+            = render partial: 'leagues/game_table', locals: { league: league }
+        - else
+          p.annotation 自分もしくは友達が参加した対局の結果が表示されます

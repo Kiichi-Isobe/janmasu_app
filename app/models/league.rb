@@ -4,6 +4,8 @@ class League < ApplicationRecord
   has_many :games, dependent: :destroy
   has_many :game_results, dependent: :destroy
 
+  validate :user_less_than_17
+
   enum haikyu_genten: { haikyu_genten20000: 20_000, haikyu_genten25000: 25_000,
                         haikyu_genten30000: 30_000, haikyu_genten35000: 35_000 }
   enum genten: { genten20000: 20_000, genten25000: 25_000,
@@ -32,5 +34,13 @@ class League < ApplicationRecord
   def rule_params(rule_id)
     rule_attr = Rule.find(rule_id).rule_attr
     assign_attributes(rule_attr)
+  end
+
+  private
+
+  def user_less_than_17
+    return if users.size < 17
+
+    errors.add :base, '1度に対局に参加できるのは最大16人までです'
   end
 end

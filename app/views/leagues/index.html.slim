@@ -3,19 +3,14 @@
 .content-container
   h1.section-title 対局一覧
   - if @leagues.any?
-    .table
-      table
-        thead
-          tr
-            th= League.human_attribute_name(:created_at)
-            th 参加人数
-            th
-        tbody
-          - @leagues.each do |league|
-            tr
-              td= link_to human_time(league.created_at), league
-              td data-label='参加人数'
-                = "#{league.users.count}"
-              td= link_to '削除', league_path(league), method: :delete, class: 'danger', data: { confirm: "対局「#{league.created_at}」を削除します。よろしいですか？" }
+    - @leagues.includes([:users, :games]).each_with_index do |league, i|
+      p.mb= human_time(league.created_at)
+      - if i == 0
+        = link_to  'ゲームを追加する', new_game_path(league_id: league.id), class: 'btn mb mr'
+      = link_to '編集する', league, class: 'btn btn-danger mb'
+      = render partial: 'game_table', locals: { league: league }
+    
+    .page-container
+      = paginate @leagues
 
-  = link_to '新規対局作成', new_league_path, class: 'btn'
+  = link_to '新しい対局を作成する', new_league_path, class: 'btn'

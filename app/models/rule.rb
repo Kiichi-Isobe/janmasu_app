@@ -20,8 +20,10 @@ class Rule < ApplicationRecord
   validates :uma, presence: true
   validates :tobi, presence: true
   validates :fraction_process, presence: true
-  validates :tobi_prize, presence: true, numericality: { only_integer: true }
-  validates :rate, presence: true, numericality: { only_integer: true }
+  validates :tobi_prize, presence: true
+  validates :tobi_prize, numericality: { only_integer: true }, allow_nil: true
+  validates :rate, presence: true
+  validates :rate, numericality: { only_integer: true }, allow_nil: true
 
   validate  :genten_greater_than_haikyu_genten
   validate  :rate_divisible_by_10
@@ -46,10 +48,14 @@ class Rule < ApplicationRecord
   end
 
   def rate_divisible_by_10
+    return if rate.nil?
+
     errors.add :rate, 'は10P単位で入力してください' if rate % 10 != 0
   end
 
   def tobi_prize_divisible_by_100
+    return if tobi_prize.nil?
+
     errors.add :tobi_prize, 'は100点単位で入力してください' if tobi_prize % 100 != 0
   end
 end

@@ -21,10 +21,9 @@ header
       - if current_user
         - if current_user.admin?
           li= link_to 'ユーザー一覧', admin_users_path
+        li= link_to '対局', leagues_path
+        li= link_to 'ルール', rules_path
         li= link_to 'ユーザー検索', search_users_path
-        li= link_to 'ルール一覧', rules_path
-        li= link_to '対局一覧', leagues_path
-        li= link_to 'ログアウト', logout_path
       - else
         li= link_to '新規登録', new_user_path
         li= link_to 'ログイン', login_path

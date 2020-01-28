@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   controller :users do
-    resources :users, only: %i[show new create edit update] do
+    resources :users, except: %i[index] do
       member do
         get :friend
       end

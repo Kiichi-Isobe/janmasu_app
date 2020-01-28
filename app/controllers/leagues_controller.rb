@@ -4,7 +4,7 @@ class LeaguesController < ApplicationController
   before_action :require_correct_user, only: %i[show destroy]
 
   def index
-    @leagues = current_user.leagues
+    @leagues = current_user.leagues.order(created_at: :desc).page(params[:page])
   end
 
   def show; end
@@ -22,7 +22,7 @@ class LeaguesController < ApplicationController
     @followings = current_user.followings
 
     if @league.save
-      redirect_to leagues_url, notice: '新規対局を作成しました'
+      redirect_to @league, notice: '新規対局を作成しました'
     else
       render :new
     end

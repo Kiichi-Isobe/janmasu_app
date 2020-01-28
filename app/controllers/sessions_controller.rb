@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
         forget(@session.user)
       end
       flash[:notice] = 'ログインしました'
-      redirect_back_or root_url
+      redirect_back_or mypage_url
     else
       render :new
     end

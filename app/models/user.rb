@@ -17,7 +17,7 @@ class User < ApplicationRecord
   has_many :leagues, through: :participations
   has_many :game_results, dependent: :destroy
 
-  validates :name, presence: true, length: { maximum: 30 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 20 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-zA-Z]*\z/.freeze
   validates :name, format: { with: VALID_NAME_REGEX,
                              message: 'は半角英数字で入力してください' }
@@ -82,6 +82,15 @@ class User < ApplicationRecord
 
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
+  end
+
+  def feed
+    following_ids = "SELECT following_id FROM relationships
+                     WHERE follower_id = :user_id"
+    league_ids = "SELECT DISTINCT league_id FROM participations
+                  WHERE user_id IN (#{following_ids})
+                  OR user_id = :user_id"
+    League.where("id IN (#{league_ids})", user_id: id)
   end
 
   def total_score
