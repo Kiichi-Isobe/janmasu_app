@@ -773,3 +773,19 @@ footer {
     }
   }
 }
+
+// ページネーション
+
+.page-container {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  .pagination {
+    margin-bottom: 5px;
+    a:hover {
+      text-decoration: underline;
+    }
+    .current {
+      color: darkseagreen;
+    }
+  }
+}

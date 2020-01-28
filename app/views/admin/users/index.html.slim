@@ -16,5 +16,8 @@
             td= user.email
             td= user.created_at
             td= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "ユーザー「#{user.name}」を削除します。よろしいですか？"}, class: 'danger'
-    
+  
+  .page-container
+    = paginate @users
+  
   = link_to '新規作成', new_admin_user_path, class: 'btn'

@@ -38,4 +38,7 @@
               td= link_to '編集', edit_rule_path(rule)
               td= link_to '削除', rule_path(rule), method: :delete, class: 'danger', data: { confirm: "ルール「#{rule.name}」を削除します。よろしいですか？"}
 
+  .page-container
+    = paginate @rules
+  
   = link_to '新規ルール作成', new_rule_path, class: 'btn'

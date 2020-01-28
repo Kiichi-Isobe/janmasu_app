@@ -53,6 +53,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'bullet'
 end
 
 group :test do
@@ -66,5 +67,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'html2slim'
 gem 'slim-rails'
-gem 'ransack'
 gem 'enum_help'
+gem 'kaminari'
