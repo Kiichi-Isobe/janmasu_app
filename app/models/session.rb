@@ -8,7 +8,7 @@ class Session
   validate :authenticate_user
 
   def user
-    User.find_by(email: email)
+    User.find_by(email: email.downcase)
   end
 
   private

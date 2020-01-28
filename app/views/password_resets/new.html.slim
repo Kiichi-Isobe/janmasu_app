@@ -1,0 +1,13 @@
+- content_for(:title) { 'パスワード再設定' }
+
+.content-container
+  h1.section-title パスワードの再設定
+  p.section-annotation
+    | ご登録のメールアドレスを入力してください。<br>
+      パスワード再設定ページのURLをメールにて送付いたします。
+      
+  = form_with url: password_resets_path, local: true, class: 'form' do |f|
+    .form-group
+      = f.text_field :email, autofocus: true
+      = f.label :email, 'メールアドレス'
+    = f.submit '送信する', class: 'btn'

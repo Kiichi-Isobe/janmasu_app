@@ -36,4 +36,5 @@ Rails.application.routes.draw do
   resources :relationships, only: %i[create destroy]
   resources :rules, except: :show
   resources :leagues
+  resources :password_resets
 end
