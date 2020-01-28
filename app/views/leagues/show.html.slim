@@ -39,7 +39,7 @@
             td= link_to '削除', game_path(game), method: :delete, class: 'danger', data: { confirm: "ゲーム「#{game.created_at}」を削除します。よろしいですか？" }
         tr
           td 合計
-          - @league.users.each do |user|
+          - @league.users.order(:id).each do |user|
             td= sum_user_results(@league, user.id)
           - if @league.need_guests?
             - @league.guests_num.times do |i|
@@ -48,7 +48,7 @@
           td
         tr
           td 収支
-          - @league.users.each do |user|
+          - @league.users.order(:id).each do |user|
             td= "#{rate_user_results(@league, user.id)}P"
           - if @league.need_guests?
             - @league.guests_num.times do |i|

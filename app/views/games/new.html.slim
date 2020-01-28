@@ -2,4 +2,7 @@
 
 .content-container
   h1.section-title 新規ゲーム作成
+  - if @league.users.size > 4
+    p.section-annotation
+      | ゲームに参加しなかったユーザーは空欄のまま送信してください
   = render partial: 'new_form', locals: { game: @game, league: @league }

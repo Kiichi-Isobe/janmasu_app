@@ -11,7 +11,7 @@ class Game < ApplicationRecord
   validate :correct_tobi
 
   def set_users_and_guests
-    league.users.each do |user|
+    league.users.order(:id).each do |user|
       game_results.build(user_id: user.id)
     end
     return unless league.need_guests?

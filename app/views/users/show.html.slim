@@ -14,7 +14,7 @@
       .user-leagues-container
         h2.user-info-title= "#{@user.name}の対局記録"
         - if @leagues.any?
-          - @leagues.includes([:users, :games]).each do |league|
+          - @leagues.includes(:games).each do |league|
             p.league-created-time= human_time(league.created_at)
             = render partial: 'leagues/game_table', locals: { league: league }
           .page-container
