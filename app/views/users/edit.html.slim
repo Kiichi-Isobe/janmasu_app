@@ -1,7 +1,8 @@
 - content_for(:title) { 'ユーザー編集' }
 
 .content-container
-  h1.section-title ユーザー編集
+  h1
+    .section-title ユーザー編集
   = form_with model: @user, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @user }
     .form-group

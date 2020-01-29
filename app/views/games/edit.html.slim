@@ -1,5 +1,6 @@
 - content_for(:title) { 'ゲーム編集' }
 
 .content-container
-  h1.section-title ゲーム編集
+  h1
+    .section-title ゲーム編集
   = render partial: 'edit_form', locals: { game: @game, league: @game.league }

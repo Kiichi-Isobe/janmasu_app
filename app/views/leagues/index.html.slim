@@ -1,7 +1,8 @@
 - content_for(:title) { '対局一覧' }
 
 .content-container
-  h1.section-title 対局一覧
+  h1
+    .section-title 対局一覧
   - if @leagues.any?
     - @leagues.includes(:games).each_with_index do |league, i|
       p.mb= human_time(league.created_at)

@@ -1,7 +1,8 @@
 - content_for(:title) { '順位編集' }
 
 .content-container
-  h1.section-title 席次などから順位を決めてください
+  h1
+    .section-title 席次などから順位を決めてください
   = form_with model: @game, url: rank_game_path(@game), local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @game }
     - @game.game_results.includes(:user).where.not(user_id: nil).order(:user_id).each do |game_result|

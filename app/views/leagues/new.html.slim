@@ -1,11 +1,13 @@
 - content_for(:title) { '新規対局作成' }
 
 .content-container
-  h1.section-title 新規対局作成
-  p.section-annotation
-    | 一度に対局に参加できるユーザーは最大16人です。<br>
-     また、1~3人のユーザーが参加する場合は、<br>
-     4人になるように自動的にゲストが参加します。
+  h1
+    .section-title 新規対局作成
+  div
+    .section-annotation
+      | 一度に対局に参加できるユーザーは最大16人です。<br>
+        また、1~3人のユーザーが参加する場合は、<br>
+        4人になるように自動的にゲストが参加します。
 
   = form_with model: @league, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @league }

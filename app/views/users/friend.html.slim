@@ -1,7 +1,8 @@
 - content_for(:title) { 'ユーザー詳細' }
 
 .content-container
-  h1.section-title= "#{@user.name}と友達のユーザー"
+  h1
+    .section-title= "#{@user.name}と友達のユーザー"
   ul.user-friend-list
     - @user.followings.each do |user|
       li

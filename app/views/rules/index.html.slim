@@ -1,7 +1,8 @@
 - content_for(:title) { 'ルール一覧' }
 
 .content-container
-  h1.section-title ルール一覧
+  h1
+    .section-title ルール一覧
   - if @rules.any?
     .table
       table

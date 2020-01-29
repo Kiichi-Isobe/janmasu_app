@@ -1,7 +1,8 @@
 - content_for(:title) { 'パスワード再設定' }
 
 .content-container
-  h1.section-title パスワードの再設定
+  h1
+    .section-title パスワードの再設定
   = form_with model: @user, url: password_reset_path(params[:id]), local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @user }
     = hidden_field_tag :email, @user.email

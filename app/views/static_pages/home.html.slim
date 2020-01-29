@@ -7,13 +7,15 @@
     | 
       自分は麻雀で勝てているのか？<br>
       いつも遊ぶあの友人は？<br>
-      収支を自動で計算して明確に。
+      結果を自動で計算、保存して明確に。
 
-.home-login-container
-  h1.section-title ログイン
-  p.test-user-info
-    | テストユーザーとしてログインするには、以下のユーザー名とパスワードをご利用ください。<br>
-      <br>
-      ユーザー名：test<br>
-      パスワード：password
-  = render partial: 'sessions/form', locals: { session: @session }
+- unless current_user
+  .home-login-container
+    h1
+      .section-title ログイン
+    p.test-user-info
+      | テストユーザーとしてログインするには、以下のユーザー名とパスワードをご利用ください。<br>
+        <br>
+        メールアドレス：test@example.com<br>
+        パスワード：password
+    = render partial: 'sessions/form', locals: { session: @session }

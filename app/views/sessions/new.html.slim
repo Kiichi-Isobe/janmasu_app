@@ -1,5 +1,6 @@
 - content_for(:title) { 'ログイン' }
 
 .content-container
-  h1.section-title ログイン
-  = render partial: 'form', loclas: { session: @session }
+  h1
+    .section-title ログイン
+  = render partial: 'form', locals: { session: @session }
