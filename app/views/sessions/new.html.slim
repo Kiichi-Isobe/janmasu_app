@@ -2,18 +2,4 @@
 
 .content-container
   h1.section-title ログイン
-  = form_with model: @session, url: login_path, local: true, class: 'form' do |f|
-    = render partial: 'shared/error_message', locals: { object: @session }
-    .form-group
-      = f.text_field :email, autofocus: true
-      = f.label :email, 'メールアドレス'
-    .form-group
-      = f.password_field :password
-      = f.label :password, 'パスワード'
-    .form-check
-      = f.check_box :remember_me
-      = f.label :remember_me, '次回から自動的にログインする', class: 'form-check-label'
-    = f.submit 'ログインする', class: 'btn mb'
-    
-    p.form-link.info= link_to '新規ユーザー登録はこちら', new_user_path
-    p.form-link.info= link_to 'パスワードを忘れた方はこちら', new_password_reset_path
+  = render partial: 'form', loclas: { session: @session }

@@ -818,3 +818,49 @@ footer {
     }
   }
 }
+
+// ホーム画面
+
+.home-title-container {
+  background-color: white;
+  padding: 60px 30px;
+  h2 {
+    margin-bottom: 15px;
+    font-size: 2.5rem;
+  }
+  h1 {
+    margin-bottom: 40px;
+    font-size: 4.5rem;
+  }
+  p {
+    color: dimgray;
+    line-height: 18px;
+    font-size: 1.2rem;
+  }
+}
+
+.home-login-container {
+  padding: 30px 0;
+  .test-user-info {
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto 30px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    line-height: 16px;
+    background-color: skyblue;
+    color: whitesmoke;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-title-container {
+    h2 {
+      font-size: 2rem;
+    }
+    h1 {
+      font-size: 4rem;
+    }
+  }
+}

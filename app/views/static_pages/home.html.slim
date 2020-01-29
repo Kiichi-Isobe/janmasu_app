@@ -1,3 +1,19 @@
 - content_for(:title) { 'ホーム' }
 
-.content-container
+.home-title-container
+  h2 麻雀をきろくする。
+  h1 janmasu
+  p
+    | 
+      自分は麻雀で勝てているのか？<br>
+      いつも遊ぶあの友人は？<br>
+      収支を自動で計算して明確に。
+
+.home-login-container
+  h1.section-title ログイン
+  p.test-user-info
+    | テストユーザーとしてログインするには、以下のユーザー名とパスワードをご利用ください。<br>
+      <br>
+      ユーザー名：test<br>
+      パスワード：password
+  = render partial: 'sessions/form', locals: { session: @session }
