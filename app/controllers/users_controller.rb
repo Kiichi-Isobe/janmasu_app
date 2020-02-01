@@ -20,7 +20,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_url, notice: '新規ユーザーを作成しました'
+      session[:user_id] = @user.id
+      redirect_to @user, notice: '新規ユーザーを作成しました'
     else
       render :new
     end
@@ -64,6 +65,7 @@ class UsersController < ApplicationController
 
   def friend
     @user = User.find(params[:id])
+    @followings = @user.followings.includes(:game_results).page(params[:page])
   end
 
   def mypage
@@ -81,5 +83,12 @@ class UsersController < ApplicationController
     return if current_user == @user
 
     redirect_to root_url
+  end
+
+  def redirect_test_user
+    return unless current_user.test
+
+    flash[:danger] = 'テストユーザーはユーザー設定を変更できません'
+    redirect_to mypage_url
   end
 end

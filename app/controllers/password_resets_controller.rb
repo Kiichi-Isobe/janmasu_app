@@ -1,6 +1,5 @@
 class PasswordResetsController < ApplicationController
   before_action :require_correct_user, only: %i[edit update]
-  bedore_action :redirect_test_user
   before_action :check_expiration, only: %i[edit update]
   def new; end
 

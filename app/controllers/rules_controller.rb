@@ -30,7 +30,7 @@ class RulesController < ApplicationController
 
   def update
     if @rule.update(rule_params)
-      redirect_to rules_path, notice: "ルール「#{@rule.name}」を編集しました"
+      redirect_to rules_path, notice: 'ルールを編集しました'
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class RulesController < ApplicationController
 
   def destroy
     @rule.destroy
-    redirect_to rules_path, notice: "ルール「#{@rule.name}」を削除しました"
+    redirect_to rules_path, notice: 'ルールを削除しました'
   end
 
   private

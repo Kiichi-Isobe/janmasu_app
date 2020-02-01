@@ -23,13 +23,6 @@ class ApplicationController < ActionController::Base
     redirect_to login_url
   end
 
-  def redirect_test_user
-    return unless current_user.test
-
-    flash[:danger] = 'テストユーザーはユーザー設定を変更できません'
-    redirect_to mypage_url
-  end
-
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
   end

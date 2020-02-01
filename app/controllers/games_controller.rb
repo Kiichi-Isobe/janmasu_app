@@ -30,7 +30,7 @@ class GamesController < ApplicationController
     @game.assign_attributes(update_game_params)
     if @game.valid?
       @game.save_and_calc
-      flash[:notice] = "ゲーム「#{@game.created_at}」を編集しました"
+      flash[:notice] = 'ゲームを編集しました'
       if @game.tie_score?
         redirect_to rank_game_url(@game)
       else
@@ -43,7 +43,7 @@ class GamesController < ApplicationController
 
   def destroy
     @game.destroy
-    redirect_to @game.league, notice: "ゲーム「#{@game.created_at}」を削除しました"
+    redirect_to @game.league, notice: 'ゲームを削除しました'
   end
 
   def rank_edit; end

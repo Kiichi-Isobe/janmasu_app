@@ -4,7 +4,12 @@
   h1
     .section-title= "#{@user.name}と友達のユーザー"
   ul.user-friend-list
-    - @user.followings.each do |user|
+    - @followings.each do |user|
       li
-        = link_to user.name, user, class: 'user-name'
+        = link_to user, class: 'user-name' do
+          = user.name
+          span= " (#{user.total_score})"
         .user-follow= render partial: 'follow_form', locals: { user: user }
+
+  .page-container
+    = paginate @followings

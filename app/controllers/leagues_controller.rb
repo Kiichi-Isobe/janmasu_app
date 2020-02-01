@@ -30,7 +30,7 @@ class LeaguesController < ApplicationController
 
   def destroy
     @league.destroy
-    redirect_to leagues_url, notice: "対局「#{@league.created_at}」を削除しました"
+    redirect_to leagues_url, notice: '対局を削除しました'
   end
 
   private
