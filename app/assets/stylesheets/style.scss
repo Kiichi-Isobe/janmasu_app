@@ -315,6 +315,12 @@ hr {
   margin-right: 10px;
 }
 
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
 // フッター
 
 footer {
