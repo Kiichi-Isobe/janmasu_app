@@ -69,7 +69,7 @@ Rails.application.configure do
     api_key: ENV['MAIL_API_KEY'],
     domain: ENV['MAIL_DOMAIN']
   }
-  config.action_mailer.default_url_options = { host: 'janmasu.com', port: '443' }
+  config.action_mailer.default_url_options = { host: 'janmasu.com', protocol: 'https' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

@@ -37,7 +37,7 @@
                 - else
                   td
             td= link_to '編集', edit_game_path(game)
-            td= link_to '削除', game_path(game), method: :delete, class: 'danger', data: { confirm: "ゲーム「#{game.created_at}」を削除します。よろしいですか？" }
+            td= link_to '削除', game_path(game), method: :delete, class: 'danger', data: { confirm: "ゲームを削除します。よろしいですか？" }
         tr
           td 合計
           - @league.users.order(:id).each do |user|
@@ -58,4 +58,5 @@
           td
 
 
-  = link_to 'ゲームを追加する', new_game_path(league_id: @league.id), class: 'btn'
+  = link_to 'ゲームを追加する', new_game_path(league_id: @league.id), class: 'btn mr mb'
+  = link_to '対局を削除する', league_path(@league), method: :delete, class: 'btn btn-danger', data: { confirm: '対局を削除します。よろしいですか？' }
