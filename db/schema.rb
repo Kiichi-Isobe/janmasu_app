@@ -10,12 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_28_010329) do
+ActiveRecord::Schema.define(version: 2020_02_02_013352) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "game_results", force: :cascade do |t|
+  create_table "game_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "game_id"
     t.bigint "league_id"
@@ -33,14 +30,14 @@ ActiveRecord::Schema.define(version: 2020_01_28_010329) do
     t.index ["user_id"], name: "index_game_results_on_user_id"
   end
 
-  create_table "games", force: :cascade do |t|
+  create_table "games", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "league_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["league_id"], name: "index_games_on_league_id"
   end
 
-  create_table "leagues", force: :cascade do |t|
+  create_table "leagues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "haikyu_genten", null: false
@@ -52,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_010329) do
     t.integer "rate", null: false
   end
 
-  create_table "participations", force: :cascade do |t|
+  create_table "participations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "league_id", null: false
     t.datetime "created_at", null: false
@@ -62,7 +59,7 @@ ActiveRecord::Schema.define(version: 2020_01_28_010329) do
     t.index ["user_id"], name: "index_participations_on_user_id"
   end
 
-  create_table "relationships", force: :cascade do |t|
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "follower_id", null: false
     t.integer "following_id", null: false
     t.datetime "created_at", null: false
@@ -72,22 +69,22 @@ ActiveRecord::Schema.define(version: 2020_01_28_010329) do
     t.index ["following_id"], name: "index_relationships_on_following_id"
   end
 
-  create_table "rules", force: :cascade do |t|
+  create_table "rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "user_id"
-    t.integer "haikyu_genten", null: false
-    t.integer "genten", null: false
-    t.integer "uma", null: false
-    t.integer "tobi", null: false
-    t.integer "fraction_process", null: false
-    t.integer "tobi_prize", null: false
-    t.integer "rate", null: false
+    t.integer "haikyu_genten", default: 25000, null: false
+    t.integer "genten", default: 30000, null: false
+    t.integer "uma", default: 2, null: false
+    t.integer "tobi", default: 1, null: false
+    t.integer "fraction_process", default: 5, null: false
+    t.integer "tobi_prize", default: 10000, null: false
+    t.integer "rate", default: 50, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_rules_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false

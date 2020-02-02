@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # 現在ログインしているユーザーを返す
   def current_user
     if (user_id = session[:user_id])
       @current_user ||= User.find_by(id: user_id)
@@ -15,6 +16,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # ログインしていなかったらログインページにリダイレクトする
   def require_login
     return if current_user
 
@@ -23,10 +25,12 @@ class ApplicationController < ActionController::Base
     redirect_to login_url
   end
 
+  # リクエストされたURLをセッションに保存する
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
   end
 
+  # セッションに保存されたURLにリダイレクトする
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)

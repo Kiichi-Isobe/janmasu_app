@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :require_login, except: %i[new create]
   before_action :require_correct_user, only: %i[edit update destroy]
   before_action :redirect_test_user, only: %i[edit update destroy]
+  before_action :require_correct_password, only: :update
 
   def show
     @user = User.find(params[:id])
@@ -30,11 +31,6 @@ class UsersController < ApplicationController
   def edit; end
 
   def update
-    if params[:user][:password].present? && !@user.authenticate(params[:user][:old_password])
-      @user.errors.add :base, '現在のパスワードが間違っています'
-      render :edit
-      return
-    end
     if @user.update(user_params)
       redirect_to mypage_url, notice: "ユーザー「#{@user.name}」を編集しました"
     else
@@ -78,6 +74,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
+  # 現在のユーザーでなければリダイレクトする
   def require_correct_user
     @user = User.find_by(id: params[:id])
     return if current_user == @user
@@ -85,10 +82,20 @@ class UsersController < ApplicationController
     redirect_to root_url
   end
 
+  # テストユーザーをリダイレクトする
   def redirect_test_user
     return unless current_user.test
 
     flash[:danger] = 'テストユーザーはユーザー設定を変更できません'
     redirect_to mypage_url
+  end
+
+  # 現在のパスワードが間違っていたら再入力させる
+  def require_correct_password
+    return if params[:user][:password].blank? ||
+              @user.authenticate(params[:user][:old_password])
+
+    @user.errors.add :base, '現在のパスワードが間違っています'
+    render :edit
   end
 end

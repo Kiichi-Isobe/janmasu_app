@@ -35,6 +35,7 @@ class PasswordResetsController < ApplicationController
     params.require(:user).permit(:password, :password_confirmation)
   end
 
+  # reset_tokenによってユーザーが認証されなかったらリダイレクトする
   def require_correct_user
     @user = User.find_by(email: params[:email])
     return if @user&.authenticated?(:reset, params[:id])
@@ -42,6 +43,7 @@ class PasswordResetsController < ApplicationController
     redirect_to root_url
   end
 
+  # reset_tokenの期限が切れていたらリダイレクトする
   def check_expiration
     return unless @user.reset_sent_at < 2.hours.ago
 

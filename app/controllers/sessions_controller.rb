@@ -9,12 +9,9 @@ class SessionsController < ApplicationController
     @session = Session.new(session_params)
 
     if @session.valid?
-      session[:user_id] = @session.user.id
-      if params[:session][:remember_me] == '1'
-        remember(@session.user)
-      else
-        forget(@session.user)
-      end
+      user = @session.user
+      session[:user_id] = user.id
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       flash[:notice] = 'ログインしました'
       redirect_back_or mypage_url
     else
@@ -34,12 +31,14 @@ class SessionsController < ApplicationController
     params.require(:session).permit(:email, :password)
   end
 
+  # ユーザーのログインを記憶するcokkieを作成する
   def remember(user)
     user.remember
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
   end
 
+  # ユーザーのログインを記憶するcokkieを削除する
   def forget(user)
     user.forget
     cookies.delete(:user_id)

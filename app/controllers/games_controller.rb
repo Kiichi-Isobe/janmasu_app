@@ -14,11 +14,7 @@ class GamesController < ApplicationController
     if @game.valid?
       @game.save_and_calc
       flash[:notice] = '新規ゲームを作成しました'
-      if @game.tie_score?
-        redirect_to rank_game_url(@game)
-      else
-        redirect_to @league
-      end
+      redirect_to(@game.tie_score? ? rank_game_url(@game) : @league)
     else
       render :new
     end
@@ -31,11 +27,7 @@ class GamesController < ApplicationController
     if @game.valid?
       @game.save_and_calc
       flash[:notice] = 'ゲームを編集しました'
-      if @game.tie_score?
-        redirect_to rank_game_url(@game)
-      else
-        redirect_to @game.league
-      end
+      redirect_to(@game.tie_score? ? rank_game_url(@game) : @game.league)
     else
       render :edit
     end
@@ -59,6 +51,7 @@ class GamesController < ApplicationController
 
   private
 
+  # paramsのleague_idからlegueを見つける
   def current_league
     @league = current_user.leagues.find_by(id: params[:league_id])
     redirect_to root_url unless @league
@@ -78,6 +71,7 @@ class GamesController < ApplicationController
     )
   end
 
+  # gameに現在のユーザーが参加していなかったらリダイレクトする
   def require_correct_user
     @game = Game.find(params[:id])
     return if @game.league.users.include?(current_user)

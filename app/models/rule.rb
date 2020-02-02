@@ -14,7 +14,7 @@ class Rule < ApplicationRecord
                            fraction_process_round4: 4,
                            fraction_process_round5: 5 }
 
-  validates :name, presence: true, length: { maximum: 30 }
+  validates :name, presence: true, length: { maximum: 20 }
   validates :haikyu_genten, presence: true
   validates :genten, presence: true
   validates :uma, presence: true

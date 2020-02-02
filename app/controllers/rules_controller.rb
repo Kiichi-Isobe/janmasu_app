@@ -7,13 +7,7 @@ class RulesController < ApplicationController
   end
 
   def new
-    @rule = current_user.rules.build(haikyu_genten: :haikyu_genten25000,
-                                     genten: :genten30000,
-                                     uma: :uma_10_20,
-                                     tobi: :tobi_yes,
-                                     fraction_process: :fraction_process_round5,
-                                     tobi_prize: 10_000,
-                                     rate: 50)
+    @rule = current_user.rules.build
   end
 
   def create
@@ -48,6 +42,7 @@ class RulesController < ApplicationController
                                  :tobi, :fraction_process, :tobi_prize, :rate)
   end
 
+  # ruleが現在のユーザーのものでなければリダイレクトする
   def require_correct_user
     @rule = current_user.rules.find_by(id: params[:id])
     redirect_to root_url unless @rule

@@ -31,7 +31,7 @@ class League < ApplicationRecord
     end
   end
 
-  def rule_params(rule_id)
+  def assign_rule_params(rule_id)
     rule_attr = Rule.find(rule_id).rule_attr
     assign_attributes(rule_attr)
   end

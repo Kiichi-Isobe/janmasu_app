@@ -17,7 +17,7 @@ class LeaguesController < ApplicationController
 
   def create
     @league = current_user.leagues.build(league_params)
-    @league.rule_params(params[:league][:rule_id])
+    @league.assign_rule_params(params[:league][:rule_id])
     @rules = current_user.rules
     @followings = current_user.followings
 
@@ -36,15 +36,19 @@ class LeaguesController < ApplicationController
   private
 
   def league_params
+    # 現在のユーザーを自動的にleagueに参加させる
     params[:league][:user_ids].push(current_user.id.to_s)
+
     params.require(:league).permit(user_ids: [])
   end
 
+  # leagueに現在のユーザーが参加していなかったらリダイレクトする
   def require_correct_user
     @league = current_user.leagues.find_by(id: params[:id])
     redirect_to root_url unless @league
   end
 
+  # 現在のユーザーがruleを1つも作成していなかったらリダイレクトする
   def require_rule
     return unless current_user.rules.empty?
 
