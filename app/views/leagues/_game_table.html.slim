@@ -28,11 +28,11 @@
             - else
               td
       tr
-        td 合計
+        td.sum 合計
         - league.users.order(:id).each do |user|
-          td= sum_user_results(league, user.id)
+          td.sum= sum_user_results(league, user.id)
         - league.guests_num.times do |i|
-          td= sum_guest_results(league, i+1)
+          td.sum= sum_guest_results(league, i+1)
 
       tr
         td 収支
