@@ -22,6 +22,9 @@ class LeaguesController < ApplicationController
     @followings = current_user.followings
 
     if @league.save
+      if @league.need_guests?
+        @league.update_attribute(:guests_num, @league.need_guests_num)
+      end
       redirect_to @league, notice: '新規対局を作成しました'
     else
       render :new

@@ -7,7 +7,7 @@
       .user-friend
         = link_to "友達#{current_user.followings.size}人", friend_user_path(current_user)
       .user-btn-container
-        - if current_user.leagues.any? && date_from_now(current_user.leagues.first.created_at) < 1.0
+        - if current_user.leagues.any? && current_user.leagues.order(created_at: :desc).first.created_at > 1.day.ago
           = link_to '最新の対局にゲームを追加する', new_game_path(league_id: @leagues.first.id), class: 'btn mb'
         = link_to '新規対局を作成する', new_league_path, class: 'btn mb'
         = link_to 'ユーザー設定', edit_user_path(current_user), class: 'btn btn-danger'

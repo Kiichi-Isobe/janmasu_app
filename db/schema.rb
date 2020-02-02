@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_02_013352) do
+ActiveRecord::Schema.define(version: 2020_02_02_031733) do
 
   create_table "game_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_02_02_013352) do
     t.integer "fraction_process", null: false
     t.integer "tobi_prize", null: false
     t.integer "rate", null: false
+    t.integer "guests_num", default: 0, null: false
   end
 
   create_table "participations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -172,13 +172,15 @@ class User < ApplicationRecord
 
   def create_game_results_copy
     game_results.each do |game_result|
-      break unless game_result.league.guests_num != 3
+      league = game_result.league
+      break if league.users.size == 1
 
       new_attr = game_result.attributes
       new_attr.delete('id')
       new_attr['user_id'] = nil
-      new_attr['guest_num'] = game_result.league.guests_num + 1
+      new_attr['guest_num'] = league.guests_num + 1
       GameResult.create!(new_attr)
+      league.update_attribute(:guests_num, league.guests_num + 1)
     end
   end
 end

@@ -19,11 +19,13 @@ class League < ApplicationRecord
                            fraction_process_round4: 4,
                            fraction_process_round5: 5 }
 
+  # leagueにguestが参加するときtrueを返す
   def need_guests?
     users.size < 4
   end
 
-  def guests_num
+  # 合計が4人になるように必要なguestの人数を返す
+  def need_guests_num
     if need_guests?
       4 - users.size
     else
@@ -31,6 +33,7 @@ class League < ApplicationRecord
     end
   end
 
+  # 入力されたルールにしたがってleagueのルールを設定する
   def assign_rule_params(rule_id)
     rule_attr = Rule.find(rule_id).rule_attr
     assign_attributes(rule_attr)
@@ -38,6 +41,7 @@ class League < ApplicationRecord
 
   private
 
+  # leagueに参加するユーザーが17人以上の時エラーを返す
   def user_less_than_17
     return if users.size < 17
 

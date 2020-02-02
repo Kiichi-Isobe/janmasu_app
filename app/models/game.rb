@@ -10,17 +10,13 @@ class Game < ApplicationRecord
   validate :not_has_tobi
   validate :correct_tobi
 
+  # leagueに参加するuser,guestに従ってgame_resultsを作成する
   def set_users_and_guests
-    league.users.order(:id).each do |user|
-      game_results.build(user_id: user.id)
-    end
-    return unless league.need_guests?
-
-    league.guests_num.times do |i|
-      game_results.build(guest_num: i + 1)
-    end
+    set_users
+    set_guests
   end
 
+  # 登録内容を保存し、それに従ってrankやcalc_scoreを計算する
   def save_and_calc
     game_results.each do |game_result|
       game_result.mark_for_destruction if game_result.score.blank?
@@ -30,6 +26,7 @@ class Game < ApplicationRecord
     add_calc_score
   end
 
+  # 同点のユーザーがいた場合trueを返す
   def tie_score?
     score_set = Set.new
     game_results.each do |game_result|
@@ -38,6 +35,7 @@ class Game < ApplicationRecord
     score_set.size != game_results.size
   end
 
+  # rankとscoreに従ってcalc_scoreを求める
   def add_calc_score
     sum_score = 0
     game_results.order(rank: :desc).each do |game_result|
@@ -58,12 +56,28 @@ class Game < ApplicationRecord
 
   private
 
+  # leagueに参加するuserに従ってgame_resultsを作成する
+  def set_users
+    league.users.order(:id).each do |user|
+      game_results.build(user_id: user.id)
+    end
+  end
+
+  # leagueに参加するguestに従ってgame_resultsを作成する
+  def set_guests
+    league.guests_num.times do |i|
+      game_results.build(guest_num: i + 1)
+    end
+  end
+
+  # 点数の合計が配給原点と異なるときエラーを返す
   def score_num_equal_to_haikyu_genten
     return if score_sum == 4 * Rule.haikyu_gentens[league.haikyu_genten]
 
     errors.add :base, '点数の合計が配給原点と等しくなるように入力してください'
   end
 
+  # 点数の合計を返す
   def score_sum
     res = 0
     game_results.each do |game_result|
@@ -72,6 +86,7 @@ class Game < ApplicationRecord
     res
   end
 
+  # 100で割り切れない点数が存在するときエラーを返す
   def score_divisible_by_100
     error_flag = 0
     game_results.each do |game_result|
@@ -82,6 +97,7 @@ class Game < ApplicationRecord
     errors.add :base, '100点単位で入力してください' if error_flag == 1
   end
 
+  # rankに被りが存在するときエラーを返す
   def correct_rank
     return if game_results.first.rank.nil?
 
@@ -94,6 +110,7 @@ class Game < ApplicationRecord
     errors.add :base, '順位が正しくありません'
   end
 
+  # 点数がちょうど4人分入力されていないときエラーを返す
   def has_4_game_results
     cnt = 0
     game_results.each do |game_result|
@@ -104,6 +121,7 @@ class Game < ApplicationRecord
     errors.add :base, '4人分の点数を入力してください'
   end
 
+  # トビなしのルールで、飛びや飛ばしにチェックがついているときエラーを返す
   def not_has_tobi
     return if league.tobi == 'tobi_yes'
 
@@ -114,6 +132,7 @@ class Game < ApplicationRecord
     errors.add :base, 'トビなしのルールに設定されています' if error_flag == 1
   end
 
+  # トビありのルールで、飛びや飛ばしの入力が矛盾しているときエラーを返す
   def correct_tobi
     return if league.tobi == 'tobi_no'
 
@@ -133,6 +152,7 @@ class Game < ApplicationRecord
     errors.add :base, 'トビの指定が正しくありません' if error_flag == 1
   end
 
+  # 点数にしたがって順位を計算する
   def add_rank
     rank = 4
     game_results.order(:score).each do |game_result|
@@ -141,6 +161,7 @@ class Game < ApplicationRecord
     end
   end
 
+  # 端点処理の設定にしたがって計算する
   def round_score(score)
     case league.fraction_process
     when 'fraction_process_no'
@@ -162,6 +183,7 @@ class Game < ApplicationRecord
     end
   end
 
+  # ウマの計算をする
   def calc_uma(rank)
     if league.uma == 'uma_no'
       0
@@ -170,6 +192,7 @@ class Game < ApplicationRecord
     end
   end
 
+  # 順位にしたがってウマの点数を返す
   def uma_score(rank)
     case rank
     when 4
@@ -181,10 +204,12 @@ class Game < ApplicationRecord
     end
   end
 
+  # 飛びと飛ばしの計算をする
   def calc_tobi_tobasi(game_result)
     tobi(game_result) + tobasi(game_result)
   end
 
+  # 飛びの点数を返す
   def tobi(game_result)
     if game_result.tobi
       -1 * league.tobi_prize
@@ -193,6 +218,7 @@ class Game < ApplicationRecord
     end
   end
 
+  # 飛んだ人数にしたがって飛ばしの点数を返す
   def tobasi(game_result)
     if game_result.tobasi
       game_results.where(tobi: true).size * league.tobi_prize
