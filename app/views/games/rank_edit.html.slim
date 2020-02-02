@@ -5,14 +5,14 @@
     .section-title 席次などから順位を決めてください
   = form_with model: @game, url: rank_game_path(@game), local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @game }
-    - @game.game_results.includes(:user).where.not(user_id: nil).order(:user_id).each do |game_result|
+    - @game.game_results.includes(:user).user_participated.each do |game_result|
       = f.fields_for :game_results, game_result do |game_result_fields|
         .form-group
           = game_result_fields.hidden_field :id, value: game_result.id
           = game_result_fields.select :rank, options_for_select({ "1位": 1, "2位": 2, "3位": 3, "4位": 4 }, selected: game_result.rank)
           = game_result_fields.label :rank, game_result.user.name
           = game_result_fields.label :rank, "#{game_result.score}点"
-    - @game.game_results.includes(:user).where.not(guest_num: nil).order(:guest_num).each do |game_result|
+    - @game.game_results.includes(:user).guest_participated.each do |game_result|
       = f.fields_for :game_results, game_result do |game_result_fields|
         .form-group
           = game_result_fields.hidden_field :id, value: game_result.id

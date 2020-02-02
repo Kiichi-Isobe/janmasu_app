@@ -179,6 +179,16 @@ class User < ApplicationRecord
     end
   end
 
+  # ユーザーが参加するleagueが1日以内に作成されているときtrueを返す
+  def create_league_within_1day?
+    if leagues.any? &&
+       leagues.order(created_at: :desc).first.created_at > 1.day.ago
+      true
+    else
+      false
+    end
+  end
+
   private
 
   # メールアドレスをすべて小文字にする
