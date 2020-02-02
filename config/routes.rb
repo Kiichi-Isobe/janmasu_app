@@ -33,7 +33,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :relationships, only: %i[create destroy]
+  controller :relationships do
+    post 'follow', action: :create
+    delete 'unfollow', action: :destroy
+  end
+
   resources :rules, except: :show
   resources :leagues
   resources :password_resets

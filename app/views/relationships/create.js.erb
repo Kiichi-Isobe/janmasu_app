@@ -1,0 +1,2 @@
+$("#follow-<%= @user.id %>").html("<%= j(render(partial: 'users/unfollow_form', locals: { id: @user.id })) %>");
+$(".friend-link").html('<%= j(link_to "友達#{@user.followings.count}人", friend_user_path(@user))%>')

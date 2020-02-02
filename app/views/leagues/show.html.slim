@@ -42,8 +42,8 @@
             td.sum= sum_user_results(@league, user.id)
           - @league.guests_num.times do |i|
             td.sum= sum_guest_results(@league, i+1)
-          td
-          td
+          td.sum
+          td.sum
         tr
           td 収支
           - @league.users.order(:id).each do |user|

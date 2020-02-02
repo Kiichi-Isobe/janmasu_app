@@ -9,7 +9,13 @@
         = link_to user, class: 'user-name' do
           = user.name
           span= " (#{user.total_score})"
-        .user-follow= render partial: 'follow_form', locals: { user: user }
+        .user-follow id= "follow-#{user.id}"
+          - if current_user.following?(user)
+            = render partial: 'unfollow_form', locals: { id: user.id }
+          - elsif current_user != user
+            = render partial: 'follow_form', locals: { id: user.id }
+          - else
+          
 
   .page-container
     = paginate @followings
