@@ -29,6 +29,7 @@ class Rule < ApplicationRecord
   validate  :rate_divisible_by_10
   validate  :tobi_prize_divisible_by_100
 
+  # idなどをのぞいたruleの設定を返す
   def rule_attr
     need_attr = attributes
     need_attr.delete('id')
@@ -41,18 +42,21 @@ class Rule < ApplicationRecord
 
   private
 
+  # 配給原点が原点よりもおおきいときエラーを返す
   def genten_greater_than_haikyu_genten
     return if Rule.haikyu_gentens[haikyu_genten] <= Rule.gentens[genten]
 
     errors.add :base, '配給原点は原点以下に設定してください'
   end
 
+  # rateが10で割り切れないときエラーを返す
   def rate_divisible_by_10
     return if rate.nil?
 
     errors.add :rate, 'は10P単位で入力してください' if rate % 10 != 0
   end
 
+  # tobi_prizeが100で割り切れないときエラーを返す
   def tobi_prize_divisible_by_100
     return if tobi_prize.nil?
 

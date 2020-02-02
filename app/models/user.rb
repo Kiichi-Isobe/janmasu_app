@@ -45,6 +45,7 @@ class User < ApplicationRecord
     following_relationships.find_by(following_id: other_user.id)
   end
 
+  # 渡された文字列を暗号化する
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
              BCrypt::Engine::MIN_COST
@@ -54,15 +55,18 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
+  # 新しいtoken用の文字列を作成する
   def self.new_token
     SecureRandom.urlsafe_base64
   end
 
+  # remember_tokenを作成して保存する
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
+  # tokenが認証されたときtrueを返す
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
@@ -70,20 +74,24 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
+  # 保存されたremember_tokenを削除する
   def forget
     update_attribute(:remember_digest, nil)
   end
 
+  # reset_tokenを作成して保存する
   def create_reset_digest
     self.reset_token = User.new_token
     update_attribute(:reset_digest, User.digest(reset_token))
     update_attribute(:reset_sent_at, Time.zone.now)
   end
 
+  # パスワード再設定用のメールを送信する
   def send_password_reset_email
     UserMailer.password_reset(self).deliver_now
   end
 
+  # ユーザーと友達の対局記録を取得する
   def feed
     following_ids = "SELECT following_id FROM relationships
                      WHERE follower_id = :user_id"
@@ -93,6 +101,7 @@ class User < ApplicationRecord
     League.where("id IN (#{league_ids})", user_id: id)
   end
 
+  # 通算得点を計算する
   def total_score
     if game_results.any?
       (game_results.sum(:calc_score) / 1000.to_f).round(1)
@@ -101,6 +110,7 @@ class User < ApplicationRecord
     end
   end
 
+  # 平均得点を計算する
   def average_score
     if game_results.any?
       (game_results.average(:calc_score) / 1000.to_f).round(2)
@@ -109,6 +119,7 @@ class User < ApplicationRecord
     end
   end
 
+  # 平均順位を計算する
   def average_rank
     if game_results.any?
       game_results.average(:rank).round(2)
@@ -117,6 +128,7 @@ class User < ApplicationRecord
     end
   end
 
+  # トップ率を計算する
   def top_percentage
     if game_results.any?
       (game_results.where(rank: 1).size / game_results.size.to_f).round(2)
@@ -125,6 +137,7 @@ class User < ApplicationRecord
     end
   end
 
+  # 連帯率を計算する
   def rentai_percentage
     if game_results.any?
       (game_results.where(
@@ -135,6 +148,7 @@ class User < ApplicationRecord
     end
   end
 
+  # ラス率を計算する
   def bottom_percentage
     if game_results.any?
       (game_results.where(rank: 4).size / game_results.size.to_f).round(2)
@@ -143,6 +157,7 @@ class User < ApplicationRecord
     end
   end
 
+  # トビ率を計算する
   def tobi_percentage
     results_with_tobi =
       game_results.joins(:league).where('leagues.tobi' => 'tobi_yes')
@@ -155,6 +170,7 @@ class User < ApplicationRecord
     end
   end
 
+  # 通算収支を計算する
   def total_rate_score
     if game_results.any?
       game_results.sum(:rate_score)
@@ -170,6 +186,7 @@ class User < ApplicationRecord
     email.downcase!
   end
 
+  # ユーザーのgame_resultをguestのものに置き換える
   def create_game_results_copy
     game_results.each do |game_result|
       league = game_result.league

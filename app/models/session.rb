@@ -13,6 +13,7 @@ class Session
 
   private
 
+  # メールアドレスかパスワードが正しくないときエラーを返す
   def authenticate_user
     return if email.blank? || password.blank?
 
