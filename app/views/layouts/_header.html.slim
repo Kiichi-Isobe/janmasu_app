@@ -22,7 +22,7 @@ header
         - if current_user.admin
           li= link_to 'ユーザー一覧', admin_users_path
         li= link_to '対局', leagues_path
-        li= link_to 'ルール', rules_path
+        li= link_to 'マイルール', rules_path
         li= link_to 'ユーザー検索', search_users_path
         - if current_user.test
           li= link_to 'ログアウト', logout_path
