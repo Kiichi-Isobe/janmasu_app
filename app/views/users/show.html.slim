@@ -5,10 +5,14 @@
     .user-profile-container
       h1.user-name= @user.name
       .user-friend
-        .friend-link= link_to "友達#{@user.followings.count}人", friend_user_path(@user)
+        .friend-link= link_to "友達#{@user.friends.count}人", friend_user_path(@user)
         .user-follow id="follow-#{@user.id}"
-          - if current_user.following?(@user)
+          - if current_user.friend?(@user)
             = render partial: 'unfollow_form', locals: { id: @user.id }
+          - elsif current_user.following?(@user) && !current_user.followed?(@user)
+            = render partial: 'cancel_friend_request_form', locals: { id: @user.id }
+          - elsif !current_user.following?(@user) && current_user.followed?(@user)
+            = render partial: 'accept_friend_request_form', locals: { id: @user.id }
           - elsif current_user != @user
             = render partial: 'follow_form', locals: { id: @user.id }
 

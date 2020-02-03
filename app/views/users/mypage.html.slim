@@ -5,7 +5,9 @@
     .user-profile-container
       h1.user-name= current_user.name
       .user-friend
-        = link_to "友達#{current_user.followings.size}人", friend_user_path(current_user)
+        .friend-link= link_to "友達#{current_user.friends.size}人", friend_user_path(current_user)
+        - if current_user.friend_request.any? 
+          .user-friend-request= link_to "友達申請#{current_user.friend_request.size}件", friend_request_path
       .user-btn-container
         - if current_user.create_league_within_1day?
           = link_to '最新の対局にゲームを追加する', new_game_path(league_id: @leagues.first.id), class: 'btn mb'

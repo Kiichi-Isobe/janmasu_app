@@ -37,12 +37,42 @@ class User < ApplicationRecord
 
   # ユーザーをフォロー解除する
   def unfollow!(other_user)
-    following_relationships.find_by(following_id: other_user.id).destroy
+    following_relationships.find_by(following_id: other_user.id)&.destroy
   end
 
-  # 現在のユーザーがフォローしていたらtrueを返す
+  # フォローしていたらtrueを返す
   def following?(other_user)
     following_relationships.find_by(following_id: other_user.id)
+  end
+
+  # フォローされていたらtrueを返す
+  def followed?(other_user)
+    followed_relationships.find_by(follower_id: other_user.id)
+  end
+
+  # 友達(相互フォロー)であればtrueを返す
+  def friend?(other_user)
+    following?(other_user) && followed?(other_user)
+  end
+
+  # 友達を取得する
+  def friends
+    following_ids = "SELECT following_id FROM relationships
+                     WHERE follower_id = :user_id"
+    followed_ids = "SELECT follower_id FROM relationships
+                     WHERE following_id = :user_id"
+    User.where("id IN (#{following_ids}) AND id IN (#{followed_ids})",
+               user_id: id)
+  end
+
+  # 友達申請をおくってきたユーザーを取得する
+  def friend_request
+    following_ids = "SELECT following_id FROM relationships
+                     WHERE follower_id = :user_id"
+    followed_ids = "SELECT follower_id FROM relationships
+                     WHERE following_id = :user_id"
+    User.where("id NOT IN (#{following_ids}) AND id IN (#{followed_ids})",
+               user_id: id)
   end
 
   # 渡された文字列を暗号化する

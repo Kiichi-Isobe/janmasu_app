@@ -7,7 +7,6 @@ class RelationshipsController < ApplicationController
       redirect_to root_url
     else
       current_user.follow!(@user)
-      @user.follow!(current_user)
       respond_to do |format|
         format.html { redirect_to @user }
         format.js
@@ -17,7 +16,7 @@ class RelationshipsController < ApplicationController
 
   def destroy
     @user = User.find(params[:following_id])
-    if current_user == @user || !current_user.following?(@user)
+    if current_user == @user
       redirect_to root_url
     else
       current_user.unfollow!(@user)

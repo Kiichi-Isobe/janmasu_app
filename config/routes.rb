@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       end
     end
     get '/mypage', action: :mypage
+    get '/friend_request', action: :friend_request
   end
 
   controller :sessions do

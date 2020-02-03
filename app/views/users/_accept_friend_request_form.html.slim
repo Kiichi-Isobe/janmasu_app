@@ -1,0 +1,3 @@
+= form_with url: '/follow' do |f|
+  = f.hidden_field :following_id, value: id
+  = f.submit '承認する', class: 'btn'

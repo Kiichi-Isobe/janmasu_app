@@ -1,2 +1,4 @@
 $("#follow-<%= @user.id %>").html("<%= j(render(partial: 'users/follow_form', locals: { id: @user.id })) %>");
-$(".friend-link").html('<%= j(link_to "友達#{@user.followings.count}人", friend_user_path(@user))%>')
+$(".friend-link").html('<%= j(link_to "友達#{@user.friends.count}人", friend_user_path(@user))%>')
+
+$("#request-<%= @user.id %>").fadeOut(200);

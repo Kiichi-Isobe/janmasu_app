@@ -61,7 +61,11 @@ class UsersController < ApplicationController
 
   def friend
     @user = User.find(params[:id])
-    @followings = @user.followings.includes(:game_results).page(params[:page])
+    @friends = @user.friends.includes(:game_results).page(params[:page])
+  end
+
+  def friend_request
+    @friend_request = current_user.friend_request.includes(:game_results)
   end
 
   def mypage

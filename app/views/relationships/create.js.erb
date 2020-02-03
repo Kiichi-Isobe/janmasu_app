@@ -1,2 +1,7 @@
-$("#follow-<%= @user.id %>").html("<%= j(render(partial: 'users/unfollow_form', locals: { id: @user.id })) %>");
-$(".friend-link").html('<%= j(link_to "友達#{@user.followings.count}人", friend_user_path(@user))%>')
+if ("<%= current_user.followed?(@user) %>"){
+  $("#follow-<%= @user.id %>").html("<%= j(render(partial: 'users/unfollow_form', locals: { id: @user.id })) %>");
+}else{
+  $("#follow-<%= @user.id %>").html("<%= j(render(partial: 'users/cancel_friend_request_form', locals: { id: @user.id })) %>");
+}
+
+$("#request-<%= @user.id %>").fadeOut(200);

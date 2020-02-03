@@ -1,0 +1,14 @@
+- content_for(:title) { '友達申請' }
+
+.content-container
+  h1
+    .section-title= "未承認の友達申請"
+  ul.user-friend-list
+    - @friend_request.each do |user|
+      li id= "request-#{user.id}"
+        = link_to user, class: 'user-name' do
+          = user.name
+          span= " (#{user.total_score})"
+        .user-follow
+          .mb= render partial: 'accept_friend_request_form', locals: { id: user.id }
+          = render partial: 'unfollow_form', locals: { id: user.id }
