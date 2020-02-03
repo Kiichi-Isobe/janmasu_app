@@ -6,6 +6,8 @@ class League < ApplicationRecord
 
   validate :user_less_than_17
 
+  scope :most_recent, -> { order(created_at: :desc).first }
+
   enum haikyu_genten: { haikyu_genten20000: 20_000, haikyu_genten25000: 25_000,
                         haikyu_genten30000: 30_000, haikyu_genten35000: 35_000 }
   enum genten: { genten20000: 20_000, genten25000: 25_000,

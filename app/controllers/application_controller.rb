@@ -35,4 +35,12 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
   end
+
+  # テストユーザーをリダイレクトする
+  def redirect_test_user
+    return unless current_user&.test
+
+    flash[:danger] = 'テストユーザーはユーザー設定を変更できません'
+    redirect_to mypage_url
+  end
 end

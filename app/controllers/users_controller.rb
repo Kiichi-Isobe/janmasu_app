@@ -86,14 +86,6 @@ class UsersController < ApplicationController
     redirect_to root_url
   end
 
-  # テストユーザーをリダイレクトする
-  def redirect_test_user
-    return unless current_user.test
-
-    flash[:danger] = 'テストユーザーはユーザー設定を変更できません'
-    redirect_to mypage_url
-  end
-
   # 現在のパスワードが間違っていたら再入力させる
   def require_correct_password
     return if params[:user][:password].blank? ||

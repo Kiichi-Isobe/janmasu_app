@@ -10,7 +10,7 @@
           .user-friend-request= link_to "友達申請#{current_user.friend_request.size}件", friend_request_path
       .user-btn-container
         - if current_user.create_league_within_1day?
-          = link_to '最新の対局にゲームを追加する', new_game_path(league_id: @leagues.first.id), class: 'btn mb'
+          = link_to '最新の対局にゲームを追加する', new_game_path(league_id: current_user.leagues.most_recent.id), class: 'btn mb'
         = link_to '新規対局を作成する', new_league_path, class: 'btn mb'
         = link_to 'ユーザー設定', edit_user_path(current_user), class: 'btn btn-danger'
 
