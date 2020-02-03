@@ -24,8 +24,10 @@ header
         li= link_to '対局', leagues_path
         li= link_to 'マイルール', rules_path
         li= link_to 'ユーザー検索', search_users_path
+        li= link_to '使い方', usage_path
         - if current_user.test
           li= link_to 'ログアウト', logout_path
       - else
         li= link_to '新規登録', new_user_path
         li= link_to 'ログイン', login_path
+        li= link_to '使い方', usage_path

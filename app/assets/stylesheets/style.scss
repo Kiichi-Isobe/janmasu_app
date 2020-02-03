@@ -862,3 +862,38 @@ footer {
     }
   }
 }
+
+// 使い方
+
+.usage-container {
+  width: 90%;
+  margin: 0 auto;
+  text-align: left;
+  h2 {
+    font-size: 1.8rem;
+    margin: 25px 0 10px;
+  }
+  p {
+    line-height: 2rem;
+    padding: 5px 0;
+    font-size: 1.3rem;
+  }
+  img {
+    display: block;
+    width: 80%;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .usage-container {
+    h2 {
+      font-size: 1.6rem;
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root to: 'static_pages#home'
 
+  controller :static_pages do
+    get '/usage', action: :usage
+  end
+
   namespace :admin do
     resources :users
   end

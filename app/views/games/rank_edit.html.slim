@@ -2,7 +2,7 @@
 
 .content-container
   h1
-    .section-title 席次などから順位を決めてください
+    .section-title 席順などから順位を決めてください
   = form_with model: @game, url: rank_game_path(@game), local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @game }
     - @game.game_results.includes(:user).user_participated.each do |game_result|
