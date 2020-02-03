@@ -1,13 +1,18 @@
-head
+head prefix='og: http://ogp.me/ns# website: http://ogp.me/ns/website# article: http://ogp.me/ns/article# fb: http://ogp.me/ns/fb#'
   title
-    = content_for?(:title) ? yield(:title) + " | Janmasu" : "Janmasu"
+    = content_for?(:title) ? yield(:title) + ' | Janmasu' : 'Janmasu'
   = csrf_meta_tags
   = csp_meta_tag
+  = favicon_link_tag('favicon.ico')
+
   meta name='viewport' content='width=device-width,initial-scale=1.0,minimum-scale=1.0'
-  meta property="og:url" content="https://janmasu.com"
-  meta property="og:title" content="janmasu"
-  meta property="og:image" content="ogp_image.png"
-  meta property="og:description" content="janmasuは、麻雀の成績を簡単に管理・保存することができるクラウドサービスです。"
+  meta property='og:site_name' content='Janmasu'
+  meta property='og:type' content='website'
+  meta property='og:title' content="#{content_for?(:title) ? yield(:title) + ' | Janmasu' : 'Janmasu'}"
+  meta property="og:description" content='Janmasuは、麻雀の成績を簡単に管理・保存することができるクラウドサービスです。'
+  meta property="og:image" content="#{image_url('ogp_image.png')}"
+  meta property="og:url" content="#{request.url}"
+  meta name='twitter:card' content='summary_large_image'
 
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap" rel="stylesheet">
   = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
