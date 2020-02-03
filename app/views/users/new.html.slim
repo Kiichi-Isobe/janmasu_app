@@ -1,4 +1,6 @@
 - content_for(:title) { '新規ユーザー作成' }
+javascript:
+  window.onload = addToNewUrl('');
 
 .content-container
   h1
@@ -17,4 +19,6 @@
     .form-group
       = f.password_field :password_confirmation, placeholder: '6文字以上で入力してください'
       = f.label :password_confirmation
-    = f.submit '登録する', class: 'btn'
+    = f.submit '登録する', class: 'btn mb'
+
+    p.form-link.info= link_to 'ログインはこちら', login_path

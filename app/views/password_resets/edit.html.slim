@@ -1,4 +1,6 @@
 - content_for(:title) { 'パスワード再設定' }
+javascript:
+  window.onload = addToEditUrl("?email=#{CGI.escape(@user.email)}");
 
 .content-container
   h1

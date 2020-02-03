@@ -1,4 +1,6 @@
 - content_for(:title) { '新規ゲーム作成' }
+javascript:
+  window.onload = addToNewUrl("?league_id=#{@league.id}");
 
 .content-container
   h1
