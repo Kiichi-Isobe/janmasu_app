@@ -7,25 +7,31 @@
           tr
             th 対戦数
             th 通算得点
-            th 平均得点
+            th 通算収支
+            th 平均素点
+            th 通算チップ
             th 通算順位
             th 平均順位
             th トップ率
             th 連帯率
             th ラス率
             th トビ率
-            th 通算収支
+            
+            
         tbody
           tr
             td= user.game_results.size
             td= user.total_score
+            td= "#{user.total_rate_score + user.total_chip_rate_score}P"
             td= user.average_score
+            td= "#{user.total_chip_number}枚"
             td= show_total_rank(user)
             td= user.average_rank
             td= user.top_percentage
             td= user.rentai_percentage
             td= user.bottom_percentage
             td= user.tobi_percentage
-            td= "#{user.total_rate_score}P"
+            
+            
   - else
     p.annotation まだ1つも対局に参加していません

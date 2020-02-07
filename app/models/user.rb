@@ -3,7 +3,7 @@ class User < ApplicationRecord
   has_secure_password
 
   before_save :downcase_email
-  before_destroy :create_game_results_copy
+  before_destroy :create_league_copy
 
   has_many :following_relationships, foreign_key: 'follower_id',
                                      class_name: 'Relationship',
@@ -141,12 +141,12 @@ class User < ApplicationRecord
     end
   end
 
-  # 平均得点を計算する
+  # 平均素点を計算する
   def average_score
     if game_results.any?
-      (game_results.average(:calc_score) / 1000.to_f).round(2)
+      game_results.average(:score).round
     else
-      0.0
+      0
     end
   end
 
@@ -162,7 +162,7 @@ class User < ApplicationRecord
   # トップ率を計算する
   def top_percentage
     if game_results.any?
-      (game_results.where(rank: 1).size / game_results.size.to_f).round(2)
+      (game_results.where(rank: 1).size / game_results.size.to_f).round(3)
     else
       0.0
     end
@@ -173,7 +173,7 @@ class User < ApplicationRecord
     if game_results.any?
       (game_results.where(
         '(game_results.rank = ?) OR (game_results.rank = ?)', 1, 2
-      ).size / game_results.size.to_f).round(2)
+      ).size / game_results.size.to_f).round(3)
     else
       0.0
     end
@@ -182,7 +182,7 @@ class User < ApplicationRecord
   # ラス率を計算する
   def bottom_percentage
     if game_results.any?
-      (game_results.where(rank: 4).size / game_results.size.to_f).round(2)
+      (game_results.where(rank: 4).size / game_results.size.to_f).round(3)
     else
       0.0
     end
@@ -195,16 +195,34 @@ class User < ApplicationRecord
     if results_with_tobi.any?
       (game_results.where(
         tobi: true
-      ).size / results_with_tobi.size.to_f).round(2)
+      ).size / results_with_tobi.size.to_f).round(3)
     else
       0.0
     end
   end
 
-  # 通算収支を計算する
+  # 通算chip_numberを計算する
+  def total_chip_number
+    if chip_results.any?
+      chip_results.sum(:number)
+    else
+      0
+    end
+  end
+
+  # 通算rate_scoreを計算する
   def total_rate_score
     if game_results.any?
       game_results.sum(:rate_score)
+    else
+      0
+    end
+  end
+
+  # 通算chip_rate_scoreを計算する
+  def total_chip_rate_score
+    if chip_results.any?
+      chip_results.sum(:rate_score)
     else
       0
     end
@@ -227,18 +245,36 @@ class User < ApplicationRecord
     email.downcase!
   end
 
-  # ユーザーのgame_resultをguestのものに置き換える
-  def create_game_results_copy
-    game_results.each do |game_result|
-      league = game_result.league
+  # 削除されるユーザーの対局をguestに置き換える
+  def create_league_copy
+    leagues.each do |league|
       break if league.users.size == 1
 
+      create_game_results_copy(league)
+      create_chip_results_copy(league)
+      league.update_attribute(:guests_num, league.guests_num + 1)
+    end
+  end
+
+  # game_resultのコピーを作る
+  def create_game_results_copy(league)
+    league.game_results.where(user_id: id).each do |game_result|
       new_attr = game_result.attributes
       new_attr.delete('id')
       new_attr['user_id'] = nil
       new_attr['guest_num'] = league.guests_num + 1
       GameResult.create!(new_attr)
-      league.update_attribute(:guests_num, league.guests_num + 1)
+    end
+  end
+
+  # chip_resultのコピーを作る
+  def create_chip_results_copy(league)
+    league.chip_model.chip_results.where(user_id: id).each do |chip_result|
+      new_attr = chip_result.attributes
+      new_attr.delete('id')
+      new_attr['user_id'] = nil
+      new_attr['guest_num'] = league.guests_num + 1
+      ChipResult.create!(new_attr)
     end
   end
 end

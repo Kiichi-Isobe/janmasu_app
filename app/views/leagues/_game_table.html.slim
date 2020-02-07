@@ -27,6 +27,19 @@
                 td= round_calc_score(league.fraction_process, game_result.calc_score)
             - else
               td
+      - if league.chip == 'chip_yes'
+        tr
+          td チップ
+          - if league.chip_model
+            - league.users.order(:id).each do |user|
+              td= chip_user_results(league, user.id)
+            - league.guests_num.times do |i|
+              td= chip_guest_results(league, i + 1)
+          - else
+            - league.users.order(:id).each do |user|
+              td 0
+            - league.guests_num.times do |i|
+              td 0
       tr
         td.sum 合計
         - league.users.order(:id).each do |user|

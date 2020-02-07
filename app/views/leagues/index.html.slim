@@ -4,7 +4,7 @@
   h1
     .section-title 対局一覧
   - if @leagues.any?
-    - @leagues.includes(:games).each_with_index do |league, i|
+    - @leagues.includes([:games, :chip_model]).each_with_index do |league, i|
       p.mb= human_time(league.created_at)
       - if i == 0
         = link_to  'ゲームを追加する', new_game_path(league_id: league.id), class: 'btn mb mr'

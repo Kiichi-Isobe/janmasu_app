@@ -6,10 +6,19 @@ class Chip < ApplicationRecord
 
   validate :number_equal_to_0
 
-  # leagueに参加するuser,guestに従ってgame_resultsを作成する
+  # leagueに参加するuser,guestに従ってchip_resultsを作成する
   def set_users_and_guests
     set_users
     set_guests
+  end
+
+  # chip_rateにしたがってscoreを計算する
+  def add_score
+    chip_results.each do |chip_result|
+      score = chip_result.number * league.chip_rate / 1000
+      chip_result.update_attributes(score: score,
+                                    rate_score: score * league.rate)
+    end
   end
 
   private

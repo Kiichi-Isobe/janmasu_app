@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_07_090456) do
+ActiveRecord::Schema.define(version: 2020_02_07_143612) do
 
   create_table "chip_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2020_02_07_090456) do
     t.integer "number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score"
+    t.integer "rate_score"
     t.index ["chip_id"], name: "index_chip_results_on_chip_id"
     t.index ["user_id"], name: "index_chip_results_on_user_id"
   end

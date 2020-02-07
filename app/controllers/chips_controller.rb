@@ -11,6 +11,7 @@ class ChipsController < ApplicationController
   def create
     @chip = @league.build_chip_model(chip_params)
     if @chip.save
+      @chip.add_score
       redirect_to @league, notice: 'チップを記録しました'
     else
       render :new

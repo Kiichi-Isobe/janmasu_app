@@ -20,7 +20,7 @@
       .user-leagues-container
         h2.user-info-title 最近の対局記録
         - if @leagues.any?
-          - @leagues.includes(:games).each do |league|
+          - @leagues.includes([:games, :chip_model]).each do |league|
             p.league-created-time= human_time(league.created_at)
             = render partial: 'leagues/game_table', locals: { league: league }
         - else
