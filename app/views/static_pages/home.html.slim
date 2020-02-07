@@ -19,3 +19,13 @@
         メールアドレス：test@example.com<br>
         パスワード：password
     = render partial: 'sessions/form', locals: { session: @session }
+
+.home-notice-container
+  h1
+    .section-title お知らせ
+  ul
+    li
+      .date 2020年02月07日
+      .description 
+        | お知らせを追加しました。<br>
+          チップの記録ができるようになりました。

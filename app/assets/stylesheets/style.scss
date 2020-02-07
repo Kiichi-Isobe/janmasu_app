@@ -852,6 +852,31 @@ footer {
   }
 }
 
+.home-notice-container {
+  background-color: white;
+  padding: 60px 5px;
+  ul {
+    width: 90%;
+    max-width: 500px;
+    margin: 0 auto;
+    li {
+      display: block;
+      text-align: left;
+      .date {
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid lightgray;
+      }
+      .description {
+        font-size: 1.2rem;
+        ul {
+          list-style: circle;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .home-title-container {
     h2 {
