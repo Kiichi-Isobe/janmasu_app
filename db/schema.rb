@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_02_031733) do
+ActiveRecord::Schema.define(version: 2020_02_07_090456) do
+
+  create_table "chip_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "chip_id"
+    t.integer "guest_num"
+    t.integer "number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chip_id"], name: "index_chip_results_on_chip_id"
+    t.index ["user_id"], name: "index_chip_results_on_user_id"
+  end
+
+  create_table "chips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "league_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_chips_on_league_id"
+  end
 
   create_table "game_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -48,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_02_02_031733) do
     t.integer "tobi_prize", null: false
     t.integer "rate", null: false
     t.integer "guests_num", default: 0, null: false
+    t.integer "chip", null: false
+    t.integer "chip_rate", null: false
   end
 
   create_table "participations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -82,6 +102,8 @@ ActiveRecord::Schema.define(version: 2020_02_02_031733) do
     t.integer "rate", default: 50, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "chip", default: 0, null: false
+    t.integer "chip_rate", default: 2000, null: false
     t.index ["user_id"], name: "index_rules_on_user_id"
   end
 
@@ -100,6 +122,9 @@ ActiveRecord::Schema.define(version: 2020_02_02_031733) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "chip_results", "chips"
+  add_foreign_key "chip_results", "users"
+  add_foreign_key "chips", "leagues"
   add_foreign_key "game_results", "games"
   add_foreign_key "game_results", "leagues"
   add_foreign_key "game_results", "users"

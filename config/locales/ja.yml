@@ -28,12 +28,16 @@ ja:
         genten: 原点
         uma: ウマ
         tobi: トビ
+        chip: チップ
         fraction_process: 端数処理
+        chip_rate: チップ料(点/枚)
         tobi_prize: トビ賞(点)
         rate: レート(P/1000点)
       league:
         id: ID
         created_at: 作成日時
+      chip/chip_results:
+        number: チップの増減
 
   date:
     abbr_day_names:
@@ -254,6 +258,9 @@ ja:
       tobi:
         tobi_no: なし
         tobi_yes: あり
+      chip:
+        chip_no: なし
+        chip_yes: あり
       fraction_process:
         fraction_process_no: 処理しない
         fraction_process_round_down: 切り捨て

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   controller :users do
-    resources :users, except: %i[index] do
+    resources :users, except: :index do
       member do
         get :friend
       end
@@ -46,4 +46,5 @@ Rails.application.routes.draw do
   resources :rules, except: :show
   resources :leagues
   resources :password_resets
+  resources :chips, only: %i[new create]
 end

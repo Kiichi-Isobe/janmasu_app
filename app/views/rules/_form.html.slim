@@ -7,10 +7,14 @@
   = render partial: 'rule_form', locals: {f: f, attribute: :genten}
   = render partial: 'rule_form', locals: {f: f, attribute: :uma}
   = render partial: 'rule_form', locals: {f: f, attribute: :tobi}
+  = render partial: 'rule_form', locals: {f: f, attribute: :chip}
   = render partial: 'rule_form', locals: {f: f, attribute: :fraction_process}
   .form-group
     = f.number_field :tobi_prize, placeholder: '100点単位で入力してください'
     = f.label :tobi_prize
+  .form-group
+    = f.number_field :chip_rate, placeholder: '1000点単位で入力してください'
+    = f.label :chip_rate
   .form-group
     = f.number_field :rate, placeholder: '10P単位で入力してください'
     = f.label :rate

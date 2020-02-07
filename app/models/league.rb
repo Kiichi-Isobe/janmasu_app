@@ -3,6 +3,7 @@ class League < ApplicationRecord
   has_many :users, through: :participations
   has_many :games, dependent: :destroy
   has_many :game_results, dependent: :destroy
+  has_one :chip_model, class_name: 'Chip', dependent: :destroy
 
   validate :user_less_than_17
 
@@ -14,6 +15,7 @@ class League < ApplicationRecord
                  genten30000: 30_000, genten40000: 40_000 }
   enum uma: { uma_no: 0, uma_5_10: 1, uma_10_20: 2, uma_10_30: 3, uma_20_30: 4 }
   enum tobi: { tobi_no: 0, tobi_yes: 1 }
+  enum chip: { chip_no: 0, chip_yes: 1 }
   enum fraction_process: { fraction_process_no: 0,
                            fraction_process_round_down: 1,
                            fraction_process_round_up: 2,

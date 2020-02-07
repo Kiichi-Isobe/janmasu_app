@@ -1,0 +1,23 @@
+- content_for(:title) { 'チップ登録' }
+javascript:
+  window.onload = addToNewUrl("?league_id=#{@league.id}");
+
+.content-container
+  h1
+    .section-title チップ登録
+  = form_with model: @chip, local: true, class: 'form' do |f|
+    = render partial: 'shared/error_message', locals: { object: @chip }
+    = hidden_field_tag :league_id, @league.id
+
+    - @chip.chip_results.each do |chip_result|
+      = f.fields_for :chip_results, chip_result do |chip_result_fields|
+        .form-group
+          = chip_result_fields.number_field :number
+          - unless chip_result.user_id.nil?
+            = chip_result_fields.hidden_field :user_id, value: chip_result.user_id
+            = chip_result_fields.label :number, chip_result.user.name
+          - else
+            = chip_result_fields.hidden_field :guest_num, value: chip_result.guest_num
+            = chip_result_fields.label :number, "ゲスト#{chip_result.guest_num}"
+
+    = f.submit '登録する', class: 'btn'

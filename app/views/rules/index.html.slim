@@ -13,8 +13,10 @@
             th= Rule.human_attribute_name(:genten)
             th= Rule.human_attribute_name(:uma)
             th= Rule.human_attribute_name(:tobi)
+            th= Rule.human_attribute_name(:chip)
             th= Rule.human_attribute_name(:fraction_process)
             th= Rule.human_attribute_name(:tobi_prize)
+            th= Rule.human_attribute_name(:chip_rate)
             th= Rule.human_attribute_name(:rate)
             th
             th
@@ -30,10 +32,14 @@
                 = rule.uma_i18n
               td data-label="#{Rule.human_attribute_name(:tobi)}"
                 = rule.tobi_i18n
+              td data-label="#{Rule.human_attribute_name(:chip)}"
+                = rule.chip_i18n
               td data-label="#{Rule.human_attribute_name(:fraction_process)}"
                 = rule.fraction_process_i18n
               td data-label="#{Rule.human_attribute_name(:tobi_prize)}"
                 = rule.tobi_prize
+              td data-label="#{Rule.human_attribute_name(:chip_rate)}"
+                = rule.chip_rate
               td data-label="#{Rule.human_attribute_name(:rate)}"
                 = "#{rule.rate}P"
               td= link_to '編集', edit_rule_path(rule)

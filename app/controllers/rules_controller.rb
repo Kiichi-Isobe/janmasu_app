@@ -39,7 +39,8 @@ class RulesController < ApplicationController
 
   def rule_params
     params.require(:rule).permit(:name, :haikyu_genten, :genten, :uma,
-                                 :tobi, :fraction_process, :tobi_prize, :rate)
+                                 :tobi, :chip, :fraction_process,
+                                 :tobi_prize, :chip_rate, :rate)
   end
 
   # ruleが現在のユーザーのものでなければリダイレクトする

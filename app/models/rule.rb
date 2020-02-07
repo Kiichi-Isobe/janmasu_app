@@ -7,6 +7,7 @@ class Rule < ApplicationRecord
                  genten30000: 30_000, genten40000: 40_000 }
   enum uma: { uma_no: 0, uma_5_10: 1, uma_10_20: 2, uma_10_30: 3, uma_20_30: 4 }
   enum tobi: { tobi_no: 0, tobi_yes: 1 }
+  enum chip: { chip_no: 0, chip_yes: 1 }
   enum fraction_process: { fraction_process_no: 0,
                            fraction_process_round_down: 1,
                            fraction_process_round_up: 2,
@@ -19,15 +20,19 @@ class Rule < ApplicationRecord
   validates :genten, presence: true
   validates :uma, presence: true
   validates :tobi, presence: true
+  validates :chip, presence: true
   validates :fraction_process, presence: true
   validates :tobi_prize, presence: true
   validates :tobi_prize, numericality: { only_integer: true }, allow_nil: true
+  validates :chip_rate, presence: true
+  validates :chip_rate, numericality: { only_integer: true }, allow_nil: true
   validates :rate, presence: true
   validates :rate, numericality: { only_integer: true }, allow_nil: true
 
   validate  :genten_greater_than_haikyu_genten
   validate  :rate_divisible_by_10
   validate  :tobi_prize_divisible_by_100
+  validate  :chip_rate_divisible_by_1000
 
   # idなどをのぞいたruleの設定を返す
   def rule_attr
@@ -61,5 +66,12 @@ class Rule < ApplicationRecord
     return if tobi_prize.nil?
 
     errors.add :tobi_prize, 'は100点単位で入力してください' if tobi_prize % 100 != 0
+  end
+
+  # chip_rateが1000で割り切れないときエラーを返す
+  def chip_rate_divisible_by_1000
+    return if chip_rate.nil?
+
+    errors.add :chip_rate, 'は1000点単位で入力してください' if chip_rate % 1000 != 0
   end
 end
