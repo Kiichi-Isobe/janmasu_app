@@ -5,6 +5,11 @@ javascript:
 .content-container
   h1
     .section-title チップ登録
+  div
+    .section-annotation
+      | チップの枚数の増減を入力してください。<br>
+        (例)5, -3, 0
+
   = form_with model: @chip, local: true, class: 'form' do |f|
     = render partial: 'shared/error_message', locals: { object: @chip }
     = hidden_field_tag :league_id, @league.id

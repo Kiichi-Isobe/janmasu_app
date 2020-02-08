@@ -5,6 +5,10 @@ javascript:
 .content-container
   h1
     .section-title 新規ゲーム作成
+  div
+    .section-annotation
+      | ゲーム終了時の素点を入力してください。<br>
+        (例) 25000, -1800, 65200
   - if @league.users.size > 4
     div
       .section-annotation
