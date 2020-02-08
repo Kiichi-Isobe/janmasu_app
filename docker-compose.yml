@@ -21,6 +21,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - selenium_chrome
+      - smtp
   selenium_chrome:
     image: selenium/standalone-chrome-debug
     logging:
