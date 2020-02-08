@@ -1,6 +1,7 @@
 class LeaguesController < ApplicationController
   before_action :require_login
   before_action :require_rule, only: :new
+  before_action :require_friend_user, only: :create
   before_action :require_correct_user, only: %i[show destroy]
 
   def index
@@ -12,14 +13,14 @@ class LeaguesController < ApplicationController
   def new
     @league = League.new
     @rules = current_user.rules
-    @followings = current_user.followings
+    @friends = current_user.friends
   end
 
   def create
     @league = current_user.leagues.build(league_params)
     @league.assign_rule_params(params[:league][:rule_id])
     @rules = current_user.rules
-    @followings = current_user.followings
+    @friends = current_user.friends
 
     if @league.save
       if @league.need_guests?
@@ -58,5 +59,15 @@ class LeaguesController < ApplicationController
     store_location
     flash[:danger] = 'まずはルールを1つ作成してください'
     redirect_to new_rule_url
+  end
+
+  # 友達でないユーザーをleagueに参加させようとしたらリダイレクトする
+  def require_friend_user
+    params[:league][:user_ids].each do |id|
+      unless current_user.friends.where(id: id.to_i)
+        redirect_to root_url
+        return
+      end
+    end
   end
 end

@@ -18,7 +18,7 @@ javascript:
       = f.label :rule_id, '使用するルール'
     .form-check
       = f.label :user_ids, '参加するユーザー', class: 'form-check-title'
-      = f.collection_check_boxes :user_ids, @followings, :id, :name do |b|
-          = b.check_box
-          = b.label class: 'form-check-label'
+      = f.collection_check_boxes :user_ids, @friends, :id, :name do |b|
+        = b.check_box
+        = b.label class: 'form-check-label'
     = f.submit '登録する', class: 'btn'
