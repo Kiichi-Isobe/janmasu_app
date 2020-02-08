@@ -6,7 +6,7 @@
         thead
           tr
             th 対戦数
-            th 通算得点
+            th 通算スコア
             th 通算収支
             th 平均素点
             th 通算チップ
@@ -23,7 +23,12 @@
             td= user.game_results.size
             td= user.total_score
             td= "#{user.total_rate_score + user.total_chip_rate_score}P"
-            td= user.average_score
+            - average_score = user.average_score
+            td
+              - if average_score > 0
+                = "+#{average_score}"
+              - else
+                = average_score
             td= "#{user.total_chip_number}枚"
             td= show_total_rank(user)
             td= user.average_rank

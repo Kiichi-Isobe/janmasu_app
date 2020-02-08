@@ -144,7 +144,9 @@ class User < ApplicationRecord
   # 平均素点を計算する
   def average_score
     if game_results.any?
-      game_results.average(:score).round
+      ((game_results.sum(:score) -
+      game_results.joins(:league).sum(:haikyu_genten)) / game_results.size
+      ).round
     else
       0
     end
