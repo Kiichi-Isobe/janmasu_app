@@ -3,7 +3,7 @@ class RulesController < ApplicationController
   before_action :require_correct_user, only: %i[edit update destroy]
 
   def index
-    @rules = current_user.rules.page(params[:page])
+    @rules = current_user.rules.page(params[:page]).per(20)
   end
 
   def new

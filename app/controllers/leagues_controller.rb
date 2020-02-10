@@ -5,7 +5,8 @@ class LeaguesController < ApplicationController
   before_action :require_correct_user, only: %i[show destroy]
 
   def index
-    @leagues = current_user.leagues.order(created_at: :desc).page(params[:page])
+    @leagues =
+      current_user.leagues.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   def show; end

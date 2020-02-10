@@ -10,7 +10,8 @@ class UsersController < ApplicationController
       redirect_to mypage_url
       return
     end
-    @leagues = @user.leagues.order(created_at: :desc).page(params[:page])
+    @leagues =
+      @user.leagues.order(created_at: :desc).page(params[:page]).per(5)
   end
 
   def new
