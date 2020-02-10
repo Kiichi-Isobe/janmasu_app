@@ -7,6 +7,31 @@
     table
       thead
         tr
+          th= Rule.human_attribute_name(:haikyu_genten)
+          th= Rule.human_attribute_name(:genten)
+          th= Rule.human_attribute_name(:uma)
+          th= Rule.human_attribute_name(:tobi)
+          th= Rule.human_attribute_name(:chip)
+          th= Rule.human_attribute_name(:fraction_process)
+          th= Rule.human_attribute_name(:tobi_prize)
+          th= Rule.human_attribute_name(:chip_rate)
+          th= Rule.human_attribute_name(:rate)
+      tbody
+        tr
+          td= @league.haikyu_genten_i18n
+          td= @league.genten_i18n
+          td= @league.uma_i18n
+          td= @league.tobi_i18n
+          td= @league.chip_i18n
+          td= @league.fraction_process_i18n
+          td= @league.tobi_prize
+          td= @league.chip_rate
+          td= "#{@league.rate}P"
+
+  .game-table
+    table
+      thead
+        tr
           th
           - @league.users.order(:id).each do |user|
             th= link_to user.name, user

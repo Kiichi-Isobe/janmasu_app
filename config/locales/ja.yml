@@ -268,3 +268,33 @@ ja:
         fraction_process_decide_by_genten: 原点以上切り捨て、原点未満切り上げ
         fraction_process_round4: 四捨五入
         fraction_process_round5: 五捨六入
+    league:
+      haikyu_genten:
+        haikyu_genten20000: 20000
+        haikyu_genten25000: 25000
+        haikyu_genten30000: 30000
+        haikyu_genten35000: 35000
+      genten:
+        genten20000: 20000
+        genten25000: 25000
+        genten30000: 30000
+        genten40000: 40000
+      uma:
+        uma_no: なし
+        uma_5_10: 5-10
+        uma_10_20: 10-20
+        uma_10_30: 10-30
+        uma_20_30: 20-30
+      tobi:
+        tobi_no: なし
+        tobi_yes: あり
+      chip:
+        chip_no: なし
+        chip_yes: あり
+      fraction_process:
+        fraction_process_no: 処理しない
+        fraction_process_round_down: 切り捨て
+        fraction_process_round_up: 切り上げ
+        fraction_process_decide_by_genten: 原点以上切り捨て、原点未満切り上げ
+        fraction_process_round4: 四捨五入
+        fraction_process_round5: 五捨六入
