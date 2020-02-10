@@ -442,7 +442,14 @@ footer {
     }
     input {
       display: inline-block;
-      display: none;
+      width: 0;
+      margin: 0;
+      &:focus + .form-check-label {
+        color: darkseagreen;
+        &::after {
+          border: 2px solid darkseagreen;
+        }
+      }
       &:checked + .form-check-label {
         color: darkseagreen;
         &::after {
