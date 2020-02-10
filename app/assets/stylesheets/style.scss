@@ -444,11 +444,17 @@ footer {
       display: inline-block;
       width: 0;
       margin: 0;
+      &:focus {
+        outline: none;
+      }
       &:focus + .form-check-label {
         color: darkseagreen;
         &::after {
           border: 2px solid darkseagreen;
         }
+      }
+      &:checked {
+        outline: none;
       }
       &:checked + .form-check-label {
         color: darkseagreen;
