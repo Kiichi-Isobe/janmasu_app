@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_07_143612) do
+ActiveRecord::Schema.define(version: 2020_02_11_181417) do
 
   create_table "chip_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 2020_02_07_143612) do
     t.integer "score", null: false
     t.integer "calc_score"
     t.integer "rank"
-    t.boolean "tobi", null: false
-    t.boolean "tobasi", null: false
+    t.boolean "tobi", default: false, null: false
+    t.boolean "tobasi", default: false, null: false
     t.integer "rate_score"
     t.integer "guest_num"
     t.datetime "created_at", null: false

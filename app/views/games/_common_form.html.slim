@@ -8,8 +8,9 @@
     - else
       = game_result_fields.hidden_field :guest_num, value: game_result.guest_num
       = game_result_fields.label :score, "ゲスト#{game_result.guest_num}"
-  .form-check
-    = game_result_fields.check_box :tobi
-    = game_result_fields.label :tobi, '飛んだ', class: 'form-check-label'
-    = game_result_fields.check_box :tobasi
-    = game_result_fields.label :tobasi, '飛ばした', class: 'form-check-label'
+  - if league.tobi == 'tobi_yes'
+    .form-check
+      = game_result_fields.check_box :tobi
+      = game_result_fields.label :tobi, '飛んだ', class: 'form-check-label'
+      = game_result_fields.check_box :tobasi
+      = game_result_fields.label :tobasi, '飛ばした', class: 'form-check-label'
