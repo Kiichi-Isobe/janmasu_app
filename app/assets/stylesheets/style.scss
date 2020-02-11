@@ -875,6 +875,7 @@ footer {
     li {
       display: block;
       text-align: left;
+      margin-bottom: 20px;
       .date {
         padding-bottom: 5px;
         margin-bottom: 10px;
@@ -882,9 +883,6 @@ footer {
       }
       .description {
         font-size: 1.2rem;
-        ul {
-          list-style: circle;
-        }
       }
     }
   }
