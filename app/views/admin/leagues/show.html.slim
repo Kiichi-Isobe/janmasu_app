@@ -1,0 +1,84 @@
+- content_for(:title) { '対局詳細' }
+
+.content-container
+  h1
+    .section-title 対局詳細
+  .game-table
+    table
+      thead
+        tr
+          th= Rule.human_attribute_name(:haikyu_genten)
+          th= Rule.human_attribute_name(:genten)
+          th= Rule.human_attribute_name(:uma)
+          th= Rule.human_attribute_name(:tobi)
+          th= Rule.human_attribute_name(:chip)
+          th= Rule.human_attribute_name(:fraction_process)
+          th= Rule.human_attribute_name(:tobi_prize)
+          th= Rule.human_attribute_name(:chip_rate)
+          th= Rule.human_attribute_name(:rate)
+      tbody
+        tr
+          td= @league.haikyu_genten_i18n
+          td= @league.genten_i18n
+          td= @league.uma_i18n
+          td= @league.tobi_i18n
+          td= @league.chip_i18n
+          td= @league.fraction_process_i18n
+          td= @league.tobi_prize
+          td= @league.chip_rate
+          td= "#{@league.rate}P"
+
+  .game-table
+    table
+      thead
+        tr
+          th
+          - @league.users.order(:id).each do |user|
+            th= link_to user.name, user
+          - @league.guests_num.times do |i|
+            th= "ゲスト#{i + 1}"
+      tbody
+        - @league.games.each.with_index(1) do |game, i|
+          tr
+            td= "第#{i}ゲーム"
+            - @league.users.order(:id).each do |user|
+              - if game_result = game.game_results.find_by(user_id: user.id)
+                - if game_result.tobi
+                  td.danger= round_calc_score(@league.fraction_process, game_result.calc_score)
+                - else
+                  td= round_calc_score(@league.fraction_process, game_result.calc_score)
+              - else
+                td
+            - @league.guests_num.times do |i|
+              - if game_result = game.game_results.find_by(guest_num: i + 1)
+                - if game_result.tobi
+                  td.danger= round_calc_score(@league.fraction_process, game_result.calc_score)
+                - else
+                  td= round_calc_score(@league.fraction_process, game_result.calc_score)
+              - else
+                td
+        - if @league.chip == 'chip_yes'
+          tr
+            td チップ
+            - if @league.chip_model
+              - @league.users.order(:id).each do |user|
+                td= chip_user_results(@league, user.id)
+              - @league.guests_num.times do |i|
+                td= chip_guest_results(@league, i + 1)
+            - else
+              - @league.users.order(:id).each do |user|
+                td 0
+              - @league.guests_num.times do |i|
+                td 0
+        tr
+          td.sum 合計
+          - @league.users.order(:id).each do |user|
+            td.sum= sum_user_results(@league, user.id)
+          - @league.guests_num.times do |i|
+            td.sum= sum_guest_results(@league, i+1)
+        tr
+          td 収支
+          - @league.users.order(:id).each do |user|
+            td= "#{rate_user_results(@league, user.id)}P"
+          - @league.guests_num.times do |i|
+            td= "#{rate_guest_results(@league, i+1)}P"

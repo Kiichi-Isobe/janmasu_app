@@ -1,0 +1,19 @@
+- content_for(:title) { '対局一覧' }
+
+.content-container
+  h1
+    .section-title= "対局数: #{League.count}"
+  .admin-table
+    table
+      thead
+        tr
+          th= League.human_attribute_name(:id)
+          th= League.human_attribute_name(:created_at)
+      tbody
+        - @leagues.each do |league|
+          tr
+            td= link_to league.id, admin_league_path(league)
+            td= league.created_at
+  
+  .page-container
+    = paginate @leagues

@@ -1,7 +1,9 @@
 - content_for(:title) { 'ユーザー一覧' }
 
 .content-container
-  .admin-user-table
+  h1
+    .section-title= "ユーザー数: #{User.count}"
+  .admin-table
     table
       thead
         tr

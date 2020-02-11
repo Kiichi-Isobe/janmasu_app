@@ -21,6 +21,7 @@ header
       - if current_user
         - if current_user.admin
           li= link_to 'ユーザー一覧', admin_users_path
+          li= link_to '対局一覧', admin_leagues_path
         - else
           li= link_to 'ホーム', mypage_path
         li= link_to '対局', leagues_path
