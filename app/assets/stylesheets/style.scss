@@ -414,6 +414,7 @@ footer {
     }
   }
   .form-check {
+    position: relative;
     display: block;
     text-align: left;
     margin-bottom: 30px;
@@ -441,20 +442,13 @@ footer {
       }
     }
     input {
-      display: inline-block;
-      width: 0;
-      margin: 0;
-      &:focus {
-        outline: none;
-      }
+      position: absolute;
+      left: -2000px;
       &:focus + .form-check-label {
         color: darkseagreen;
         &::after {
           border: 2px solid darkseagreen;
         }
-      }
-      &:checked {
-        outline: none;
       }
       &:checked + .form-check-label {
         color: darkseagreen;
@@ -471,6 +465,9 @@ footer {
 
 .btn {
   display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   max-width: 90%;
   padding: 10px 10px;
   font-size: 1.4rem;
