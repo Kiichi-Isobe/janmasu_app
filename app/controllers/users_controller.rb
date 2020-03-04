@@ -62,7 +62,8 @@ class UsersController < ApplicationController
 
   def friend
     @user = User.find(params[:id])
-    @friends = @user.friends.includes(:game_results).page(params[:page])
+    @friends = @user.friends.includes(:game_results)
+                    .order_by_score.page(params[:page])
   end
 
   def friend_request

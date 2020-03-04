@@ -18,6 +18,12 @@ class User < ApplicationRecord
   has_many :game_results, dependent: :destroy
   has_many :chip_results, dependent: :destroy
 
+  scope :order_by_score, lambda {
+                           left_joins(:game_results)
+                             .group('users.id')
+                             .order(Arel.sql('SUM(game_results.calc_score) desc'))
+                         }
+
   validates :name, presence: true, length: { maximum: 20 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-z_A-Z]*\z/.freeze
   validates :name, format: { with: VALID_NAME_REGEX,
@@ -62,7 +68,7 @@ class User < ApplicationRecord
                      WHERE follower_id = :user_id"
     followed_ids = "SELECT follower_id FROM relationships
                      WHERE following_id = :user_id"
-    User.where("id IN (#{following_ids}) AND id IN (#{followed_ids})",
+    User.where("users.id IN (#{following_ids}) AND users.id IN (#{followed_ids})",
                user_id: id)
   end
 
