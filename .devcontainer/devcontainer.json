@@ -10,6 +10,7 @@
   "extensions": [
     "esbenp.prettier-vscode",
     "donjayamanne.githistory",
+    "github.vscode-pull-request-github",
     "rebornix.ruby",
     "misogi.ruby-rubocop",
     "wingrunr21.vscode-ruby",
