@@ -18,12 +18,6 @@ class User < ApplicationRecord
   has_many :game_results, dependent: :destroy
   has_many :chip_results, dependent: :destroy
 
-  scope :order_by_score, lambda {
-                           left_joins(:game_results)
-                             .group('users.id')
-                             .order(Arel.sql('SUM(game_results.calc_score) desc'))
-                         }
-
   validates :name, presence: true, length: { maximum: 20 }, uniqueness: true
   VALID_NAME_REGEX = /\A[0-9a-z_A-Z]*\z/.freeze
   validates :name, format: { with: VALID_NAME_REGEX,
@@ -138,13 +132,14 @@ class User < ApplicationRecord
     League.where("id IN (#{league_ids})", user_id: id)
   end
 
+  # 統計データを更新する
+  def update_statistics
+    update_attribute(:calc_score, game_results.sum(:calc_score))
+  end
+
   # 通算得点を計算する
   def total_score
-    if game_results.any?
-      (game_results.sum(:calc_score) / 1000.to_f).round(1)
-    else
-      0.0
-    end
+    (calc_score / 1000.to_f).round(1)
   end
 
   # 平均素点を計算する

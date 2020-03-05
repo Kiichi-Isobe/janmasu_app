@@ -43,6 +43,11 @@ class League < ApplicationRecord
     assign_attributes(rule_attr)
   end
 
+  # 統計データを更新する
+  def update_statistics
+    users.each(&:update_statistics)
+  end
+
   private
 
   # leagueに参加するユーザーが17人以上の時エラーを返す

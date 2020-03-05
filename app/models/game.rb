@@ -24,6 +24,7 @@ class Game < ApplicationRecord
     save
     add_rank
     add_calc_score
+    league.update_statistics
   end
 
   # 同点のユーザーがいた場合trueを返す

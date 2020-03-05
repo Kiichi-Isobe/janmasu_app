@@ -34,7 +34,9 @@ class LeaguesController < ApplicationController
   end
 
   def destroy
+    users = @league.users.to_a
     @league.destroy
+    users.each(&:update_statistics)
     redirect_to leagues_url, notice: '対局を削除しました'
   end
 
@@ -67,7 +69,7 @@ class LeaguesController < ApplicationController
     params[:league][:user_ids].each do |id|
       unless current_user.friends.where(id: id.to_i)
         redirect_to root_url
-        return
+        break
       end
     end
   end

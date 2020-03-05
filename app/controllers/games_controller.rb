@@ -34,7 +34,9 @@ class GamesController < ApplicationController
   end
 
   def destroy
+    league = @game.league
     @game.destroy
+    league.update_statistics
     redirect_to @game.league, notice: 'ゲームを削除しました'
   end
 
@@ -43,6 +45,7 @@ class GamesController < ApplicationController
   def rank_update
     if @game.update(update_game_params)
       @game.add_calc_score
+      @game.league.update_statistics
       redirect_to @game.league, notice: '順位を編集しました'
     else
       render :rank_edit
