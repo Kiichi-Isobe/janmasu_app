@@ -134,7 +134,11 @@ class User < ApplicationRecord
 
   # 統計データを更新する
   def update_statistics
-    update_attribute(:calc_score, game_results.sum(:calc_score))
+    update_attributes(calc_score: game_results.sum(:calc_score),
+                      first_num: game_results.where(rank: 1).size,
+                      second_num: game_results.where(rank: 2).size,
+                      third_num: game_results.where(rank: 3).size,
+                      fourth_num: game_results.where(rank: 4).size)
   end
 
   # 通算得点を計算する
@@ -165,7 +169,7 @@ class User < ApplicationRecord
   # トップ率を計算する
   def top_percentage
     if game_results.any?
-      (game_results.where(rank: 1).size / game_results.size.to_f).round(3)
+      (first_num / game_results.size.to_f).round(3)
     else
       0.0
     end
@@ -174,9 +178,7 @@ class User < ApplicationRecord
   # 連帯率を計算する
   def rentai_percentage
     if game_results.any?
-      (game_results.where(
-        '(game_results.rank = ?) OR (game_results.rank = ?)', 1, 2
-      ).size / game_results.size.to_f).round(3)
+      ((first_num + second_num) / game_results.size.to_f).round(3)
     else
       0.0
     end
@@ -185,7 +187,7 @@ class User < ApplicationRecord
   # ラス率を計算する
   def bottom_percentage
     if game_results.any?
-      (game_results.where(rank: 4).size / game_results.size.to_f).round(3)
+      (fourth_num / game_results.size.to_f).round(3)
     else
       0.0
     end
