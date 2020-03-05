@@ -17,26 +17,45 @@
             th ラス率
             th トビ率
             
-            
-        tbody
-          tr
-            td= user.game_results.size
-            td= user.total_score
-            td= "#{user.total_rate_score + user.total_chip_rate_score}P"
-            - average_score = user.average_score
-            td
-              - if average_score > 0
-                = "+#{average_score}"
-              - else
-                = average_score
-            td= "#{user.total_chip_number}枚"
-            td= show_total_rank(user)
-            td= user.average_rank
-            td= user.top_percentage
-            td= user.rentai_percentage
-            td= user.bottom_percentage
-            td= user.tobi_percentage
-            
-            
+        - if current_user.friends.include?(user) || current_user == user
+          tbody
+            tr
+              td= user.game_results.size
+              td= "#{user.total_score} (#{ranking(user.calc_score)}位)"
+              td= "#{user.total_rate_score + user.total_chip_rate_score}P"
+              - average_score = user.average_score
+              td
+                - if average_score > 0
+                  = "+#{average_score}"
+                - else
+                  = average_score
+              td= "#{user.total_chip_number}枚"
+              td= show_total_rank(user)
+              td= user.average_rank
+              td= user.top_percentage
+              td= user.rentai_percentage
+              td= user.bottom_percentage
+              td= user.tobi_percentage
+          
+        - else
+          tbody
+            tr
+              td= user.game_results.size
+              td= user.total_score
+              td= "#{user.total_rate_score + user.total_chip_rate_score}P"
+              - average_score = user.average_score
+              td
+                - if average_score > 0
+                  = "+#{average_score}"
+                - else
+                  = average_score
+              td= "#{user.total_chip_number}枚"
+              td= show_total_rank(user)
+              td= user.average_rank
+              td= user.top_percentage
+              td= user.rentai_percentage
+              td= user.bottom_percentage
+              td= user.tobi_percentage           
+              
   - else
     p.annotation まだ1つも対局に参加していません

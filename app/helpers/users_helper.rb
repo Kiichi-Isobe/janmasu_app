@@ -1,4 +1,10 @@
 module UsersHelper
+  def ranking(score)
+    a = current_user.friends.pluck(:calc_score)
+    a.push(current_user.calc_score)
+    a.sort.reverse.bsearch_index { |x| x <= score } + 1
+  end
+
   # ユーザーの順位の統計を表示形式を整えて返す
   def show_total_rank(user)
     rank = user.game_results.group('game_results.rank').size
