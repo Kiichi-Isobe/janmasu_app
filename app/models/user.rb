@@ -141,6 +141,15 @@ class User < ApplicationRecord
                       fourth_num: game_results.where(rank: 4).size)
   end
 
+  # 対戦数を計算する
+  def game_num
+    if game_results.any?
+      game_results.size
+    else
+      0
+    end
+  end
+
   # 通算得点を計算する
   def total_score
     (calc_score / 1000.to_f).round(1)
@@ -162,7 +171,7 @@ class User < ApplicationRecord
     if game_results.any?
       game_results.average(:rank).round(2)
     else
-      0.0
+      4.0
     end
   end
 
@@ -189,7 +198,7 @@ class User < ApplicationRecord
     if game_results.any?
       (fourth_num / game_results.size.to_f).round(3)
     else
-      0.0
+      1.0
     end
   end
 
@@ -202,7 +211,7 @@ class User < ApplicationRecord
         tobi: true
       ).size / results_with_tobi.size.to_f).round(3)
     else
-      0.0
+      1.0
     end
   end
 
@@ -213,6 +222,10 @@ class User < ApplicationRecord
     else
       0
     end
+  end
+
+  def total_rate_scores
+    total_rate_score + total_chip_rate_score
   end
 
   # 通算rate_scoreを計算する
