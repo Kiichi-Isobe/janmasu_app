@@ -55,7 +55,10 @@
               td= user.top_percentage
               td= user.rentai_percentage
               td= user.bottom_percentage
-              td= user.tobi_percentage           
-              
+              td= user.tobi_percentage
+    - if user.game_results.size >= 10           
+      p.section-annotation
+        | ※平均的な実力のプレイヤーが#{user.game_results.size}回対戦した結果、
+          平均順位が#{user.average_rank}より良くなる確率は約#{cdf(user)}％です
   - else
     p.annotation まだ1つも対局に参加していません
