@@ -1,0 +1,15 @@
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/bindex-0.8.1/ext/skiptrace
+/home/vagrant/.rbenv/versions/2.5.1/bin/ruby -r ./siteconf20200619-16567-11wkz3z.rb extconf.rb
+creating Makefile
+
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" clean
+
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR="
+compiling cruby.c
+linking shared-object skiptrace/internal/cruby.so
+
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/bindex-0.8.1/ext/skiptrace
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.so ./.gem.20200619-16567-1qgk1r1/skiptrace/internal

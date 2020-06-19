@@ -1,0 +1,13 @@
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/json-2.3.0/ext/json
+/home/vagrant/.rbenv/versions/2.5.1/bin/ruby -r ./siteconf20200619-16567-1aaxbc9.rb extconf.rb
+creating Makefile
+
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/json-2.3.0/ext/json
+make "DESTDIR=" clean
+
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/json-2.3.0/ext/json
+make "DESTDIR="
+make: Nothing to be done for 'all'.
+
+current directory: /home/vagrant/janmasu_app/vendor/bundle/ruby/2.5.0/gems/json-2.3.0/ext/json
+make "DESTDIR=" install
