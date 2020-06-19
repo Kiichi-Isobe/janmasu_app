@@ -12,9 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_03_05_171134) do
 
-  create_table "chip_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "chip_id"
+  create_table "chip_results", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "chip_id"
     t.integer "guest_num"
     t.integer "number", null: false
     t.datetime "created_at", null: false
@@ -25,17 +25,17 @@ ActiveRecord::Schema.define(version: 2020_03_05_171134) do
     t.index ["user_id"], name: "index_chip_results_on_user_id"
   end
 
-  create_table "chips", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "league_id"
+  create_table "chips", force: :cascade do |t|
+    t.integer "league_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["league_id"], name: "index_chips_on_league_id"
   end
 
-  create_table "game_results", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "game_id"
-    t.bigint "league_id"
+  create_table "game_results", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "game_id"
+    t.integer "league_id"
     t.integer "score", null: false
     t.integer "calc_score"
     t.integer "rank"
@@ -50,29 +50,29 @@ ActiveRecord::Schema.define(version: 2020_03_05_171134) do
     t.index ["user_id"], name: "index_game_results_on_user_id"
   end
 
-  create_table "games", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "league_id"
+  create_table "games", force: :cascade do |t|
+    t.integer "league_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["league_id"], name: "index_games_on_league_id"
   end
 
-  create_table "leagues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "leagues", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "haikyu_genten", null: false
-    t.integer "genten", null: false
-    t.integer "uma", null: false
-    t.integer "tobi", null: false
-    t.integer "fraction_process", null: false
-    t.integer "tobi_prize", null: false
-    t.integer "rate", null: false
+    t.integer "haikyu_genten"
+    t.integer "genten"
+    t.integer "uma"
+    t.integer "tobi"
+    t.integer "fraction_process"
+    t.integer "tobi_prize"
+    t.integer "rate"
     t.integer "guests_num", default: 0, null: false
-    t.integer "chip", null: false
-    t.integer "chip_rate", null: false
+    t.integer "chip"
+    t.integer "chip_rate"
   end
 
-  create_table "participations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "participations", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "league_id", null: false
     t.datetime "created_at", null: false
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_171134) do
     t.index ["user_id"], name: "index_participations_on_user_id"
   end
 
-  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "relationships", force: :cascade do |t|
     t.integer "follower_id", null: false
     t.integer "following_id", null: false
     t.datetime "created_at", null: false
@@ -92,9 +92,9 @@ ActiveRecord::Schema.define(version: 2020_03_05_171134) do
     t.index ["following_id"], name: "index_relationships_on_following_id"
   end
 
-  create_table "rules", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "rules", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "user_id"
+    t.integer "user_id"
     t.integer "haikyu_genten", default: 25000, null: false
     t.integer "genten", default: 30000, null: false
     t.integer "uma", default: 2, null: false
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_171134) do
     t.index ["user_id"], name: "index_rules_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
@@ -129,12 +129,4 @@ ActiveRecord::Schema.define(version: 2020_03_05_171134) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
-  add_foreign_key "chip_results", "chips"
-  add_foreign_key "chip_results", "users"
-  add_foreign_key "chips", "leagues"
-  add_foreign_key "game_results", "games"
-  add_foreign_key "game_results", "leagues"
-  add_foreign_key "game_results", "users"
-  add_foreign_key "games", "leagues"
-  add_foreign_key "rules", "users"
 end
